@@ -1,0 +1,102 @@
+{
+  "PPV_NAME": "Wardley vs. Dubois",
+  "SECONDARY_PPV": "Chisora vs. Wilder",
+  "SPORT": "Boxing",
+  "flow": "schedule",
+  "TIER": "ultimate",
+  "RATE_PLAN": "annual pay monthly",
+  "global": {
+    "PPV_DATE": "Sat 9th May at 23:30",
+    "SECONDARY_PPV_DATE": "Sat 9th May at 23:30",
+    "PPV_TIME": "20:30",
+    "PPV_PROMOTER": "Queensberry Promotions",
+    "PPV_DESCRIPTION": "Catch the biggest moment of the year. Select a DAZN plan to pair with your pay-per-view.",
+    "ANNUAL_MONTHS": "11"
+  },
+  "regions": {
+    "IN": {
+      "BASE_URL": "https://www.dazn.com/en-IN",
+      "CURRENCY": "₹",
+      "DAZN_TIER": "DAZN Ultimate",
+      "PPV_PRICE": "₹1,953",
+      "UPSELL_PRICE": "₹1,775",
+      "MONTHLY_PRICE": "799",
+      "ANNUAL_PRICE": "409",
+      "ANNUAL_TOTAL": "4,499",
+      "ANNUAL_PAY_MONTHLY_PRICE": "1,775",
+      "ANNUAL_UPFRONT_PRICE": "17,800",
+      "UPFRONT_SAVE_AMOUNT": "3,500",
+      "NEXT_PAYMENT_PRICE": "₹1,775",
+      "BUNDLE_PRICE": "₹2,999",
+      "BUNDLE_ORIGINAL_PRICE": "₹3,906"
+    },
+    "AU": {
+      "BASE_URL": "https://www.dazn.com/en-AU",
+      "CURRENCY": "$",
+      "DAZN_TIER": "DAZN Ultimate",
+      "PPV_PRICE": "$49.99",
+      "UPSELL_PRICE": "$16.99",
+      "MONTHLY_PRICE": "31.99",
+      "ANNUAL_PRICE": "16.99",
+      "ANNUAL_TOTAL": "",
+      "ANNUAL_PAY_MONTHLY_PRICE": "",
+      "ANNUAL_UPFRONT_PRICE": "",
+      "UPFRONT_SAVE_AMOUNT": "",
+      "NEXT_PAYMENT_PRICE": "$31.99",
+      "BUNDLE_PRICE": "$79.99",
+      "BUNDLE_ORIGINAL_PRICE": "$99.98"
+    },
+    "UK": {
+      "BASE_URL": "https://www.dazn.com/en-GB",
+      "CURRENCY": "£",
+      "DAZN_TIER": "DAZN Ultimate",
+      "PPV_PRICE": "£24.99",
+      "UPSELL_PRICE": "£24.99",
+      "MONTHLY_PRICE": "25.99",
+      "ANNUAL_PRICE": "15.99",
+      "ANNUAL_TOTAL": "",
+      "ANNUAL_PAY_MONTHLY_PRICE": "24.99",
+      "ANNUAL_UPFRONT_PRICE": "249.99",
+      "UPFRONT_SAVE_AMOUNT": "49.89",
+      "NEXT_PAYMENT_PRICE": "£25.99",
+      "BUNDLE_PRICE": "£49.99",
+      "BUNDLE_ORIGINAL_PRICE": "£59.98",
+      "UPSELL_PLAN_NAME": "Annual - Pay Monthly",
+      "FIRST_MONTH_FREE_TEXT": "+ one month free",
+      "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "Annual contract. Auto renews",
+      "ULTIMATE_FEATURE_2": "HDR and Dolby 5.1 surround sound on select events.",
+      "ULTIMATE_FEATURE_3": "Every match from Lega Serie A, and highlights from LALIGA, Bundesliga and the Saudi Pro League.",
+      "TRIAL_MONTHLY_PRICE": "£25.99"
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "subscribe without a pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    },
+    "variant3": {
+      "detection": "2 fight",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "subscribe without a pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  },
+  "PPV_CTA_TEXT": "Continue with {{PPV_NAME}} only",
+  "PLAN_PAGE_TITLE": "Choose a plan that's right for you",
+  "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "12 month contract",
+  "ULTIMATE_FEATURE_2": "Highlights from LALIGA, Bundesliga and Saudi Pro League.",
+  "ULTIMATE_FEATURE_3": "HDR and Dolby 5.1 surround sound on select events."
+}

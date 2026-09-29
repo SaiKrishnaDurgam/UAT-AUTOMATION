@@ -1,0 +1,53 @@
+{
+  "eventKey": "glory_collision_standalone",
+  "EVENT_STATUS": "expired",
+  "EVENT_STATUS_NOTE": "Event is over - test expected to FAIL - kept for regression validation",
+  "PPV_NAME": "GLORY Collision 9",
+  "SPORT": "Kickboxing",
+  "PPV_TYPE": "standalone",
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "Glory Kickboxing",
+    "PPV_LOCATION": "Rotterdam",
+    "LANDING_DESCRIPTION": "A new Light Heavyweight king will be crowned as eight elite fighters battle through a one-night Grand Prix in Rotterdam.",
+    "LANDING_DATE_BADGE": "Sunday at 00:30|Saturday at 20:00"
+  },
+  "regions": {
+    "GB": {
+      "PPV_LOCATION": "Rotterdam",
+      "PPV_DATE": "Sunday at 00:30|Saturday at 20:00|Sat 5:30PM",
+      "PPV_TIME": "00:30",
+      "PPV_PRICE": "£24.99",
+      "PPV_PRICE_RAW": "24.99",
+      "UPSELL_PRICE": "£14.99"
+    }
+  },
+  "upsell_ppv": {
+    "UPSELL_HEADING": "Don't miss Fury vs Hall – add the PPV to your plan today.",
+    "UPSELL_DESCRIPTION": "Watch the World's Strongest Man takes on the Fury dynasty in one of the biggest crossover mismatches in modern boxing|Watch the World's Strongest Man takes on the Fury dynasty in one of the biggest weight mismatches in modern boxing",
+    "UPSELL_DATE": "Saturday at 18:00",
+    "UPSELL_PRICE": "£14.99"
+  },
+  "pages": {
+    "ppv": {
+      "detection": "choose your subscription"
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "subscribe without a pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    },
+    "variant3": {
+      "detection": "2 fight",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    }
+  }
+}

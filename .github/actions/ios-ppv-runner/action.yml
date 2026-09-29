@@ -1,0 +1,162 @@
+name: Run iOS PPV journey
+description: Run an iOS PPV Appium journey
+inputs:
+  journey: { required: true }
+runs:
+  using: composite
+  steps:
+    - name: Clean stale local reports
+      shell: bash
+      run: rm -rf appium/test-results appium/reports reports
+    - shell: bash
+      run: npm ci --prefer-offline --no-audit
+    - shell: bash
+      run: cd appium && npm ci --prefer-offline --no-audit
+    - name: Kill stale Appium/iproxy processes before starting
+      shell: bash
+      run: |
+        set +e
+        port="${APPIUM_PORT:-4723}"
+        echo "🧹 Cleaning up any stale process on port $port and iproxy for ${IOS_UDID:-unknown}..."
+        pids="$(lsof -ti tcp:"$port" 2>/dev/null)"
+        [ -n "$pids" ] && kill -9 $pids 2>/dev/null
+        pids="$(lsof -ti tcp:8100 2>/dev/null)"
+        [ -n "$pids" ] && kill -9 $pids 2>/dev/null
+        pkill -f "iproxy 8100 8100 -u ${IOS_UDID}" 2>/dev/null
+        for p in "$port" 8100; do
+          for i in $(seq 1 10); do
+            lsof -ti tcp:"$p" >/dev/null 2>&1 || break
+            sleep 1
+          done
+        done
+        echo "✅ Stale process cleanup complete."
+        set -e
+    - name: Start Appium server
+      shell: bash
+      run: |
+        set -euo pipefail
+        port="${APPIUM_PORT:-4723}"
+        cd appium
+        appium_log="${RUNNER_TEMP:-/tmp}/appium-${port}.log"
+        if command -v appium >/dev/null 2>&1; then
+          appium_cmd=(appium)
+        else
+          appium_cmd=(npx --yes --package appium@2 appium)
+        fi
+        "${appium_cmd[@]}" --port "$port" --relaxed-security --address 127.0.0.1 > "$appium_log" 2>&1 &
+        APPIUM_PID=$!
+        echo "APPIUM_PID=$APPIUM_PID" >> "$GITHUB_ENV"
+        echo "APPIUM_LOG=$appium_log" >> "$GITHUB_ENV"
+        # Wait for Appium to be ready
+        for i in $(seq 1 60); do
+          if curl -sf "http://127.0.0.1:${port}/status" > /dev/null 2>&1; then
+            echo "✅ Appium ready on port $port (PID $APPIUM_PID)"
+            exit 0
+          fi
+          if ! kill -0 "$APPIUM_PID" 2>/dev/null; then
+            echo "❌ Appium exited before it became ready. Log:"
+            cat "$appium_log" || true
+            exit 1
+          fi
+          sleep 1
+        done
+        echo "❌ Appium did not become ready on port $port. Log:"
+        cat "$appium_log" || true
+        kill "$APPIUM_PID" 2>/dev/null || true
+        exit 1
+    - name: Start iproxy
+      shell: bash
+      run: |
+        set -euo pipefail
+        if ! command -v iproxy > /dev/null 2>&1; then
+          echo "❌ iproxy not found on this runner. Install via: brew install libimobiledevice"
+          echo "   This runner does not have the required iOS tooling. Ensure the job runs on the correct self-hosted runner."
+          exit 1
+        fi
+        iproxy 8100 8100 -u "${IOS_UDID}" &
+        IPROXY_PID=$!
+        echo "IPROXY_PID=$IPROXY_PID" >> "$GITHUB_ENV"
+        sleep 2
+        if ! kill -0 "$IPROXY_PID" 2>/dev/null; then
+          echo "❌ iproxy exited before it became ready."
+          exit 1
+        fi
+        echo "✅ iproxy started (PID $IPROXY_PID)"
+    - if: ${{ env.PROFILE != '' }}
+      shell: bash
+      run: |
+        IFS='/' read -r state plan <<< "$PROFILE"
+        echo "USER_STATE=$state" >> "$GITHUB_ENV"
+        echo "PLAN=$plan" >> "$GITHUB_ENV"
+    - shell: bash
+      env:
+        IOS_DEVICE_MODE: real
+        DAZN_BUNDLE_ID: com.dazn.theApp
+      run: |
+        cd appium
+        if [ "${{ inputs.journey }}" = "new-user" ]; then
+          npx wdio run config/wdio.ios.conf.ts --spec tests/ios/newuserios.spec.ts
+        else
+          npx wdio run config/wdio.ios.conf.ts --spec tests/ios/existinguserios.spec.ts
+        fi
+    - name: Stop background processes
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        port="${APPIUM_PORT:-4723}"
+        [ -n "${APPIUM_PID:-}" ] && kill "$APPIUM_PID" 2>/dev/null || true
+        [ -n "${IPROXY_PID:-}" ] && kill "$IPROXY_PID" 2>/dev/null || true
+        for p in "$port" 8100; do
+          for i in $(seq 1 10); do
+            lsof -ti tcp:"$p" >/dev/null 2>&1 || break
+            sleep 1
+          done
+          pids="$(lsof -ti tcp:"$p" 2>/dev/null || true)"
+          [ -n "$pids" ] && kill -9 $pids 2>/dev/null || true
+        done
+    - name: Store iOS test results locally
+      id: store-report
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        journey="${{ inputs.journey }}"
+        report_id="${SOURCE}-${PROFILE:-$PLAN}"
+        report_id="$(echo "$report_id" | tr '/ :|*?<>\"' '_' | tr -cd '[:alnum:]_.-')"
+        # Attempt-specific names keep rerun artifacts isolated. The workflow
+        # summary downloads only this attempt, so an old failure cannot leak
+        # into a later successful rerun.
+        report_name="ppv-ios-${journey}-${report_id}-attempt-${GITHUB_RUN_ATTEMPT}"
+        reports_root="${PPV_REPORTS_ROOT:-/tmp/ppv-reports}"
+        report_dir="${reports_root}/${GITHUB_RUN_ID}/attempt-${GITHUB_RUN_ATTEMPT}/${report_name}"
+        rm -rf "$report_dir"
+        mkdir -p "$report_dir"
+        found=false
+        for source_dir in appium/test-results appium/reports reports; do
+          if [ -e "$source_dir" ]; then
+            cp -R "$source_dir" "$report_dir/"
+            found=true
+          fi
+        done
+        if [ "$found" = false ]; then
+          echo "No iOS report folders found for $report_name"
+        fi
+        echo "Stored iOS test results locally at $report_dir"
+        echo "REPORT_NAME=$report_name" >> "$GITHUB_ENV"
+        echo "report_name=$report_name" >> "$GITHUB_OUTPUT"
+    - name: Upload job report as GitHub artifact
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.store-report.outputs.report_name }}
+        path: |
+          appium/test-results/
+          appium/reports/
+          reports/
+        if-no-files-found: ignore
+        retention-days: 1
+        compression-level: 0
+    - name: Clean local reports after storing
+      if: ${{ always() }}
+      shell: bash
+      run: rm -rf appium/test-results appium/reports reports

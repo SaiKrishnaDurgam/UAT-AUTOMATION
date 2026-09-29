@@ -1,0 +1,87 @@
+{
+  "eventKey": "aew_forbidden_door",
+  "PPV_NAME": "AEW: Forbidden Door",
+  "PPV_DISPLAY_NAME": "AEW: Forbidden Door",
+  "PPV_FULL_NAME": "All Elite Wrestling Forbidden Door",
+  "SPORT": "Wrestling",
+  "PPV_TYPE": "normal",
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "All Elite Wrestling",
+    "PPV_ENTITLEMENT_ID": "ppv_t_aew_forbiddendoor",
+    "PPV_DESCRIPTION": "All Elite Wrestling lands in San Jose, California for AEW x NJPW Forbidden Door from the SAP Center",
+    "PPV_UTC_DATE": "2026-06-29T00:00:00Z",
+    "PPV_LOCATION": "San Jose, California",
+    "PPV_DATE": "Mon 29th Jun at 05:30",
+    "PPV_TIME": "05:30",
+    "PPV_CARD_TITLE": "AEW: Forbidden Door",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "BOXING_BANNER_SUBTITLE": "",
+    "ANNUAL_BADGE": "N/A",
+    "ANNUAL_FREE_BADGE": "N/A"
+  },
+  "regions": {
+    "GB": {
+      "OFFER_TYPE": "7_day_trial",
+      "LANDING_PAGE_PPV_DATE": "29 June",
+      "PPV_PRICE": "£19.99",
+      "TODAY_YOU_PAY_PRICE": "£19.99",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "US": {
+      "OFFER_TYPE": "7_day_trial",
+      "LANDING_PAGE_PPV_DATE": "28 June",
+      "PPV_PRICE": "$49.99",
+      "TODAY_YOU_PAY_PRICE": "$49.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AU": {
+      "OFFER_TYPE": "7_day_trial",
+      "LANDING_PAGE_PPV_DATE": "29 June",
+      "PPV_PRICE": "$49.95",
+      "TODAY_YOU_PAY_PRICE": "$49.95",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "N/A",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AE": {
+      "OFFER_TYPE": "7_day_trial",
+      "LANDING_PAGE_PPV_DATE": "29 June",
+      "PPV_PRICE": "AED 90",
+      "TODAY_YOU_PAY_PRICE": "AED 90",
+      "UPSELL_PRICE": "AED 72.99",
+      "UPSELL_CROSSED_PRICE": "N/A",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

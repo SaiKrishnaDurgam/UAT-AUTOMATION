@@ -1,0 +1,314 @@
+name: "Web · GB · Prod · Existing user — sign in during flow"
+
+on:
+  workflow_dispatch:
+    inputs:
+      PPV_CONFIG:
+        description: 'PPV config filename/key'
+        required: true
+        default: 'ppv_t_joshua_prenga.json'
+
+      PAYMENT_METHOD:
+        description: 'Payment method'
+        required: true
+        default: 'credit_card'
+        type: choice
+        options:
+          - credit_card
+          - gpay
+
+      SWITCH:
+        description: 'Switch to Ultimate'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: read
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+
+jobs:
+  prepare-matrix:
+    name: Prepare source matrix
+
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+    timeout-minutes: 30
+
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build applicable source matrix
+        id: matrix
+        env:
+          PPV_CONFIG: ${{ inputs.PPV_CONFIG }}
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const configInput = process.env.PPV_CONFIG;
+          const filename = path.basename(configInput).endsWith('.json')
+            ? path.basename(configInput)
+            : `${path.basename(configInput)}.json`;
+
+          const findConfig = (dir) => {
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const fullPath = path.join(dir, entry.name);
+              if (entry.isFile() && entry.name === filename) return fullPath;
+              if (entry.isDirectory()) {
+                const found = findConfig(fullPath);
+                if (found) return found;
+              }
+            }
+            return null;
+          };
+
+          const directPath = path.resolve(configInput);
+          const eventPath = fs.existsSync(directPath)
+            ? directPath
+            : findConfig(path.resolve('config'));
+          if (!eventPath) throw new Error(`PPV config not found: ${configInput}`);
+
+          const event = JSON.parse(fs.readFileSync(eventPath, 'utf8'));
+          const sourceConfig = JSON.parse(fs.readFileSync('config/surfacingpoint.json', 'utf8'));
+          const sport = String(event.SPORT || '').trim().toLowerCase();
+          const hasBundle = event.HAS_BUNDLE === true;
+          const hasDefaultSignupPpv = event.HAS_DEFAULT_SIGNUP_PPV === true;
+
+          const allSources = [
+            'landing-page-banner',
+
+            'home-page-banner',
+            'home-page-dont-miss',
+            'home-biggest-fights',
+            'home-page-dazntile',
+
+            'home-boxing-banner',
+            'home-boxing-tile',
+            'home-boxing-upcoming',
+            'home-kickboxing-tile',
+
+            'boxing-page-banner',
+            'boxing-page-bundle',
+            'boxing-upcoming-fights',
+            'boxing-banner-ultimate',
+            'boxing-ultimate-subscription',
+            'boxing-standard-subscription',
+            'boxing-join-the-club',
+
+            'search',
+            'schedule',
+            'myaccount',
+          ];
+
+          const sources = allSources.filter((source) => {
+            if (source === 'home-kickboxing-tile' && sport !== 'kickboxing') return false;
+            if (source === 'boxing-page-bundle' && !hasBundle) return false;
+            if (sourceConfig[source]?.defaultSignup && !hasDefaultSignupPpv) return false;
+            return true;
+          });
+
+          const allProfiles = [
+            'freemium/standard_monthly',
+            'freemium/standard_apm',
+            'freemium/ultimate_apm',
+            'freemium/ultimate_upfront',
+
+            'frozen/standard_monthly',
+            'frozen/standard_apm',
+            'frozen/ultimate_apm',
+            'frozen/ultimate_upfront',
+
+            'active_standard_monthly/standard_monthly',
+            'active_standard_monthly/ultimate_apm',
+            'active_standard_monthly/ultimate_upfront',
+
+            'active_standard_apm/standard_apm',
+            'active_standard_apm/ultimate_apm',
+
+            'active_ultimate_apm/ultimate_apm',
+            'active_ultimate_upfront/ultimate_upfront',
+          ];
+
+          const ultimateOnlySources = new Set([
+            'boxing-banner-ultimate',
+            'boxing-ultimate-subscription',
+            'boxing-join-the-club',
+          ]);
+
+          const validUltimateProfiles = new Set([
+            'active_standard_monthly/ultimate_apm',
+            'active_standard_monthly/ultimate_upfront',
+            'active_standard_apm/ultimate_apm',
+          ]);
+
+          const matrix = [];
+          for (const source of sources) {
+            for (const profile of allProfiles) {
+              if (ultimateOnlySources.has(source) && !validUltimateProfiles.has(profile)) continue;
+              matrix.push({ source, profile });
+            }
+          }
+
+          if (sources.includes('home-page-banner') || sources.includes('home-page-dont-miss')) {
+            for (const plan of ['standard_monthly', 'standard_apm', 'ultimate_apm', 'ultimate_upfront']) {
+            }
+          }
+
+          if (sources.includes('myaccount')) {
+            for (const plan of ['standard_monthly', 'standard_apm', 'ultimate_apm', 'ultimate_upfront']) {
+            }
+          }
+
+          // landing-page-dont-miss-live-switch: freemium, standard plans only
+          if (sources.includes('landing-page-banner')) {
+            matrix.push({ source: 'landing-page-dont-miss-live-switch', profile: 'freemium/standard_monthly', switch: 'true' });
+            matrix.push({ source: 'landing-page-dont-miss-live-switch', profile: 'freemium/standard_apm', switch: 'true' });
+          }
+
+          console.log(`Event: ${event.eventKey || event.PPV_NAME || configInput}`);
+          console.log(`SPORT=${event.SPORT || 'not set'}, HAS_BUNDLE=${hasBundle}, HAS_DEFAULT_SIGNUP_PPV=${hasDefaultSignupPpv}`);
+          console.log(`Scheduled sources (${sources.length}): ${sources.join(', ')}`);
+          console.log(`Total matrix jobs: ${matrix.length}`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `matrix=${JSON.stringify(matrix)}\n`);
+          NODE
+
+  prod:
+    name: ${{ matrix.source }} | ${{ matrix.profile }}
+
+    needs: prepare-matrix
+
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        include: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
+
+    env:
+      CI: 'true'
+      HEADLESS: 'true'
+      DAZN_REGION: GB
+      DAZN_ENV: prod
+      LOGIN_FIRST: 'false'
+      SOURCE: ${{ matrix.source }}
+      PROFILE: ${{ matrix.profile }}
+      PPV_CONFIG: ${{ inputs.PPV_CONFIG }}
+      PAYMENT_METHOD: ${{ inputs.PAYMENT_METHOD }}
+      SWITCH: ${{ matrix.switch || inputs.SWITCH }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Runner
+        run: |
+          echo "Runner: $RUNNER_NAME"
+          echo "OS: $RUNNER_OS"
+          hostname
+
+      - name: Verify Node
+        run: |
+          node -v
+          npm -v
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium browser
+        run: npx playwright install chromium
+
+      - name: Set USER_STATE and PLAN from matrix profile
+        run: |
+          IFS='/' read -r _US _PL <<< "$PROFILE"
+          echo "USER_STATE=${_US}" >> $GITHUB_ENV
+          echo "PLAN=${_PL}"       >> $GITHUB_ENV
+
+      - name: Log matrix context
+        run: |
+          echo "=============================="
+          echo "SOURCE      = $SOURCE"
+          echo "USER_STATE  = $USER_STATE"
+          echo "PLAN        = $PLAN"
+          echo "LOGIN_FIRST = $LOGIN_FIRST"
+          echo "SWITCH      = $SWITCH"
+          echo "=============================="
+
+      - name: Run PROD PPV Flow
+        run: npx playwright test tests/existing_user/existinguser.ppv.spec.ts --project=chromium
+
+      - name: Archive reports on runner disk
+        if: always()
+        shell: bash
+        run: |
+          REPORT_ROOT="$HOME/DAZN-CI-Reports"
+          WORKFLOW_NAME="${{ github.workflow }}"
+          RUN_ID="${{ github.run_id }}"
+          RUN_NUMBER="${{ github.run_number }}"
+          JOB_NAME="${{ matrix.source }}-${{ matrix.profile }}"
+          TIMESTAMP="$(date '+%Y-%m-%d_%H-%M-%S')"
+
+          SAFE_WORKFLOW="$(echo "$WORKFLOW_NAME" | tr ' /:|' '_' | tr -cd '[:alnum:]_.-')"
+          SAFE_JOB="$(echo "$JOB_NAME" | tr ' /:|' '_' | tr -cd '[:alnum:]_.-')"
+
+          DEST="$REPORT_ROOT/$SAFE_WORKFLOW/run-${RUN_NUMBER}-${RUN_ID}/$SAFE_JOB/$TIMESTAMP"
+
+          mkdir -p "$DEST"
+
+          if [ -d reports ]; then
+            mkdir -p "$DEST/reports"
+            cp -R reports/. "$DEST/reports/"
+          fi
+
+          if [ -d test-results ]; then
+            mkdir -p "$DEST/test-results"
+            cp -R test-results/. "$DEST/test-results/"
+          fi
+
+          if [ -d playwright-report ]; then
+            mkdir -p "$DEST/playwright-report"
+            cp -R playwright-report/. "$DEST/playwright-report/"
+          fi
+
+          echo "=================================================="
+          echo "LOCAL REPORT ARCHIVE SAVED"
+          echo "Runner machine : $(hostname)"
+          echo "Folder         : $DEST"
+          echo "=================================================="
+
+      - name: Upload Playwright Report
+        if: ${{ false }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-${{ matrix.source }}-${{ matrix.profile }}-${{ github.run_id }}
+          path: playwright-report/
+          if-no-files-found: ignore
+
+      - name: Upload Results
+        if: ${{ false }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-${{ matrix.source }}-${{ matrix.profile }}-${{ github.run_id }}
+          path: |
+            test-results/
+            reports/
+          if-no-files-found: ignore

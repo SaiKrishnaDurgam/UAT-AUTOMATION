@@ -1,0 +1,125 @@
+{
+  "schedule": {
+    "source": "schedule",
+    "page": "schedule",
+    "surface": "PPV Tile",
+    "validationSheet": "Schedule page",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+  "search": {
+    "source": "search",
+    "page": "search",
+    "surface": "PPV Tile",
+    "validationSheet": "Search page",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+
+  "landing-page-banner": {
+    "source": "landing-page-banner",
+    "page": "landing",
+    "surface": "PPV Banner",
+    "validationSheet": "Landing-page-banner",
+    "endPage": "payment",
+    "copyUrlFromPaywall": true,
+    "supportedUserTypes": [
+      "new"
+    ]
+  },
+  "home-page-banner": {
+    "source": "home-page-banner",
+    "page": "home",
+    "surface": "PPV Banner",
+    "validationSheet": "Home-page-banner",
+    "endPage": "payment",
+    "copyUrlFromPaywall": true,
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+  "home-page-dont-miss": {
+    "source": "home-page-dont-miss",
+    "page": "home",
+    "surface": "PPV Tile",
+    "validationSheet": "Home-page-tile",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+
+  "home-boxing-banner": {
+    "source": "home-boxing-banner",
+    "page": "home-of-boxing",
+    "surface": "PPV Banner",
+    "validationSheet": "Home-boxing-banner",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+  "home-boxing-upcoming": {
+    "source": "home-boxing-upcoming",
+    "page": "home-of-boxing",
+    "surface": "PPV Tile",
+    "validationSheet": "Home-boxing-upcoming",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+  "home-boxing-tile": {
+    "source": "home-boxing-tile",
+    "page": "home-of-boxing",
+    "surface": "PPV Tile",
+    "validationSheet": "Home-boxing-upcoming",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+  "home-page-popup": {
+    "source": "home-page-popup",
+    "page": "home",
+    "surface": "PPV Popup",
+    "validationSheet": "Home-page-popup",
+    "endPage": "payment",
+    "supportedUserTypes": [
+      "new",
+      "existing"
+    ]
+  },
+  "home-page-dazntile": {
+    "source": "home-page-dazntile",
+    "page": "home",
+    "endPage": "payment",
+    "defaultSignup": true,
+    "tileEntitlement": "base_dazn_content"
+  },
+  "home-page-subscribe": {
+    "source": "home-page-subscribe",
+    "page": "home",
+    "endPage": "payment",
+    "defaultSignup": true
+  },
+  "subscribe-without-pay-per-view": {
+    "source": "home-page-dazntile",
+    "page": "home",
+    "endPage": "plan",
+    "defaultSignup": true,
+    "noPpvClick": true,
+    "tileEntitlement": "base_dazn_content"
+  }
+}

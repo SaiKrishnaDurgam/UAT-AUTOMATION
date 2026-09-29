@@ -1,0 +1,57 @@
+name: "Create PAC workflow summary"
+description: "Collects individual PAC partner scenario reports and compiles one consolidated workflow report."
+inputs:
+  title:
+    description: "Title of the consolidated summary report"
+    required: true
+  pac_partner:
+    description: "PAC Partner name"
+    required: true
+  pac_version:
+    description: "PAC Architecture version (1.0 or 2.0)"
+    required: true
+    default: "1.0"
+  env:
+    description: "Target DAZN environment (staging or prod)"
+    required: true
+    default: "staging"
+  artifact_pattern:
+    description: "Pattern to match individual job report artifacts"
+    required: true
+  artifact_name:
+    description: "Name of the consolidated workflow summary artifact"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Download all job reports from GitHub artifacts
+      uses: actions/download-artifact@v4
+      with:
+        pattern: ${{ inputs.artifact_pattern }}
+        path: pac-downloaded-artifacts
+        merge-multiple: false
+      continue-on-error: true
+
+    - name: Compile PAC workflow summary
+      shell: bash
+      env:
+        REPORT_TITLE: ${{ inputs.title }}
+        PAC_PARTNER: ${{ inputs.pac_partner }}
+        PAC_VERSION: ${{ inputs.pac_version }}
+        DAZN_ENV: ${{ inputs.env }}
+        GITHUB_RUN_ID: ${{ github.run_id }}
+        GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+        ARTIFACT_NAME: ${{ inputs.artifact_name }}
+      run: |
+        set -euo pipefail
+        node "${{ github.action_path }}/compile.js"
+
+    - name: Upload consolidated PAC report artifact
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: pac-workflow-summary/
+        retention-days: 14
+        if-no-files-found: ignore

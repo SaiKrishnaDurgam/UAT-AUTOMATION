@@ -1,0 +1,133 @@
+{
+  "eventKey": "aew_all_in",
+  "PPV_NAME": "AEW: All In",
+  "PPV_DISPLAY_NAME": "AEW: All In",
+  "PPV_FULL_NAME": "All Elite Wrestling All In",
+  "SPORT": "Wrestling",
+  "PPV_TYPE": "normal",
+  "HAS_BUNDLE": false,
+  "PPV_DEV_MODE": false,
+  "DEFAULT_SIGNUP_DEVMODE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": false,
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "All Elite Wrestling",
+    "PPV_ENTITLEMENT_ID": "ppv_t_aew_all_in",
+    "PPV_DESCRIPTION": "AEW returns to the iconic Wembley Stadium, with some of the biggest names already confirmed for the London spectacular.",
+    "PPV_UTC_DATE": "2026-08-30T18:00:00Z",
+    "PPV_LOCATION": "Wembley Stadium, London",
+    "BOXING_BANNER_DATE": "SUN 30TH AUG",
+    "BOXING_BANNER_SUBTITLE": "AEW returns to the iconic Wembley Stadium, with some of the biggest names already confirmed for the London spectacular.",
+    "BOXING_UPCOMING_DATE": "AUG 30",
+    "LANDING_DONT_MISS_DATE": "AUG 30",
+    "PPV_CARD_TITLE": "AEW: All In",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "BANNER_DESCRIPTION": "AEW returns to the iconic Wembley Stadium, with some of the biggest names already confirmed for the London spectacular.",
+    "HOME_POPUP_DESCRIPTION": "AEW returns to the iconic Wembley Stadium, with some of the biggest names already confirmed for the London spectacular.",
+    "ANNUAL_BADGE": "N/A",
+    "ANNUAL_FREE_BADGE": "N/A"
+  },
+  "regions": {
+    "GB": {
+      "OFFER_TYPE": "8_day_trial",
+      "LANDING_PAGE_PPV_DATE": "30 August",
+      "PPV_DATE": "Sun 30th Aug at 19:00",
+      "PPV_PAGE_DATE": "Sun 30th Aug at 19:00",
+      "PPV_TIME": "19:00",
+      "BOXING_BANNER_DATE": "SUN 30TH AUG",
+      "LANDING_BANNER_DATE": "SUN 30TH AUG AT 19:00",
+      "HOME_POPUP_DATE": "SUN 30TH AUG AT 19:00",
+      "PPV_POPUP_DATE": "30 AUG 7:00PM",
+      "SEARCH_PPV_DATE_TIME": "30 AUG 7:00PM",
+      "SCHEDULE_PPV_TIME": "7:00PM",
+      "HOME_BOXING_UPCOMING_TIME": "7:00PM",
+      "PPV_PRICE": "£14.99",
+      "TODAY_YOU_PAY_PRICE": "£14.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "US": {
+      "OFFER_TYPE": "8_day_trial",
+      "LANDING_PAGE_PPV_DATE": "30 August",
+      "PPV_DATE": "Sun 30th Aug at 14:00",
+      "PPV_PAGE_DATE": "Sun 30th Aug at 14:00",
+      "PPV_TIME": "14:00",
+      "BOXING_BANNER_DATE": "SUN 30TH AUG",
+      "LANDING_BANNER_DATE": "SUN 30TH AUG AT 14:00",
+      "HOME_POPUP_DATE": "SUN 30TH AUG AT 14:00",
+      "PPV_POPUP_DATE": "30 AUG 2:00PM",
+      "SEARCH_PPV_DATE_TIME": "30 AUG 2:00PM",
+      "SCHEDULE_PPV_TIME": "2:00PM",
+      "HOME_BOXING_UPCOMING_TIME": "2:00PM",
+      "PPV_PRICE": "$49.99",
+      "TODAY_YOU_PAY_PRICE": "$49.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AU": {
+      "OFFER_TYPE": "8_day_trial",
+      "LANDING_PAGE_PPV_DATE": "31 August",
+      "PPV_DATE": "Mon 31st Aug at 04:00",
+      "PPV_PAGE_DATE": "Mon 31st Aug at 04:00",
+      "PPV_TIME": "04:00",
+      "BOXING_BANNER_DATE": "MON 31ST AUG",
+      "LANDING_BANNER_DATE": "MON 31ST AUG AT 04:00",
+      "HOME_POPUP_DATE": "MON 31ST AUG AT 04:00",
+      "PPV_POPUP_DATE": "31 AUG 4:00AM",
+      "SEARCH_PPV_DATE_TIME": "31 AUG 4:00AM",
+      "SCHEDULE_PPV_TIME": "4:00AM",
+      "HOME_BOXING_UPCOMING_TIME": "4:00AM",
+      "PPV_PRICE": "$49.95",
+      "TODAY_YOU_PAY_PRICE": "$49.95",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "N/A",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AE": {
+      "LANDING_PAGE_PPV_DATE": "30 August",
+      "PPV_DATE": "Sun 30th Aug at 22:00",
+      "PPV_PAGE_DATE": "Sun 30th Aug at 22:00",
+      "PPV_TIME": "22:00",
+      "BOXING_BANNER_DATE": "SUN 30TH AUG",
+      "LANDING_BANNER_DATE": "SUN 30TH AUG AT 22:00",
+      "HOME_POPUP_DATE": "SUN 30TH AUG AT 22:00",
+      "PPV_POPUP_DATE": "30 AUG 10:00PM",
+      "SEARCH_PPV_DATE_TIME": "30 AUG 10:00PM",
+      "SCHEDULE_PPV_TIME": "10:00PM",
+      "HOME_BOXING_UPCOMING_TIME": "10:00PM",
+      "PPV_PRICE": "AED 90.00",
+      "TODAY_YOU_PAY_PRICE": "AED 90.00",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

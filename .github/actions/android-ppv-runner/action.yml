@@ -1,0 +1,108 @@
+name: Run Android PPV journey
+description: Runs Android Appium PPV test journeys.
+inputs:
+  journey:
+    description: 'The PPV journey to run (e.g., new-user or existing-user)'
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Add Android SDK platform-tools to PATH
+      shell: bash
+      run: |
+        SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-$HOME/Library/Android/sdk}}"
+        [ -d "$SDK_ROOT/platform-tools" ] || SDK_ROOT="/opt/homebrew/share/android-commandlinetools"
+        SDK_PATH="$SDK_ROOT/platform-tools"
+        if [ -d "$SDK_PATH" ]; then
+          echo "$SDK_PATH" >> "$GITHUB_PATH"
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+        fi
+    - shell: bash
+      run: npm ci
+    - shell: bash
+      run: cd appium && npm ci
+    - name: Clear stale Android report artifacts
+      shell: bash
+      run: |
+        rm -rf appium/test-results appium/reports appium/playwright-report reports
+        mkdir -p appium/test-results
+    - name: Verify assigned Android device and ADB setup
+      shell: bash
+      run: |
+        set -euo pipefail
+        SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-$HOME/Library/Android/sdk}}"
+        [ -d "$SDK_ROOT/platform-tools" ] || SDK_ROOT="/opt/homebrew/share/android-commandlinetools"
+        export PATH="$SDK_ROOT/platform-tools:$PATH"
+        adb start-server
+        if [ -z "${DEVICE_SERIAL:-}" ] || ! adb devices | grep -qw "${DEVICE_SERIAL:-nosuchdevice}"; then
+          DETECTED_SERIAL=$(adb devices | awk 'NR>1 && $2=="device" {print $1; exit}')
+          if [ -n "$DETECTED_SERIAL" ]; then
+            echo "Auto-detected connected Android device: $DETECTED_SERIAL"
+            echo "DEVICE_SERIAL=$DETECTED_SERIAL" >> "$GITHUB_ENV"
+            export DEVICE_SERIAL="$DETECTED_SERIAL"
+          else
+            echo "::error::No connected Android device found via ADB."
+            exit 1
+          fi
+        fi
+        adb -s "$DEVICE_SERIAL" wait-for-device
+        adb -s "$DEVICE_SERIAL" get-state | grep -qx device
+    - if: ${{ env.PROFILE != '' }}
+      shell: bash
+      run: |
+        IFS='/' read -r state plan <<< "$PROFILE"
+        echo "USER_STATE=$state" >> "$GITHUB_ENV"
+        echo "PLAN=$plan" >> "$GITHUB_ENV"
+    - shell: bash
+      run: |
+        cd appium
+        if [ "${{ inputs.journey }}" = "new-user" ]; then
+          npx wdio run config/wdio.android.conf.ts --spec tests/android/ppv.handoff.spec.ts
+        else
+          npx wdio run config/wdio.android.conf.ts --spec tests/android/existingusermobile.ppv.spec.ts
+        fi
+    - name: Store Android test results locally
+      id: store-report
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        journey="${{ inputs.journey }}"
+        report_id="${SOURCE}-${PROFILE:-$PLAN}"
+        report_id="$(echo "$report_id" | tr '/ :|*?<>\"' '_' | tr -cd '[:alnum:]_.-')"
+        # Keep each journey separate; source/profile identifiers are shared by
+        # the sign-in-during-flow and already-signed-in matrices.
+        # Attempt-specific names keep rerun artifacts isolated. The workflow
+        # summary downloads only this attempt, so an old failure cannot leak
+        # into a later successful rerun.
+        report_name="ppv-android-${journey}-${report_id}-attempt-${GITHUB_RUN_ATTEMPT}"
+        reports_root="${PPV_REPORTS_ROOT:-/tmp/ppv-reports}"
+        report_dir="${reports_root}/${GITHUB_RUN_ID}/attempt-${GITHUB_RUN_ATTEMPT}/${report_name}"
+        rm -rf "$report_dir"
+        mkdir -p "$report_dir"
+        found=false
+        for source_dir in appium/test-results appium/reports reports; do
+          if [ -e "$source_dir" ]; then
+            cp -R "$source_dir" "$report_dir/"
+            found=true
+          fi
+        done
+        if [ "$found" = false ]; then
+          echo "No Android report folders found for $report_name"
+        fi
+        echo "Stored Android test results locally at $report_dir"
+        echo "REPORT_NAME=$report_name" >> "$GITHUB_ENV"
+        echo "report_name=$report_name" >> "$GITHUB_OUTPUT"
+    - name: Upload job report as GitHub artifact
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.store-report.outputs.report_name }}
+        path: |
+          appium/test-results/
+          appium/reports/
+          reports/
+        if-no-files-found: ignore
+        retention-days: 1
+        compression-level: 0

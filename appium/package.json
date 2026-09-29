@@ -1,0 +1,37 @@
+{
+  "name": "appium",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "android": "wdio run config/wdio.android.conf.ts",
+    "preandroid:tv": "npm run reset:android-app",
+    "android:tv": "TV_TARGET=androidtv wdio run config/wdio.android.conf.ts --spec ./tests/android/tv.ppv.spec.ts",
+    "reset:android-app": "ts-node scripts/reset-android-app.ts",
+    "tv:ppv:flows": "ts-node scripts/run-tv-ppv-flows.ts",
+    "android:scenarios": "ts-node scripts/run-android-scenarios.ts",
+    "selected:scenarios": "ts-node scripts/run-android-scenarios.ts",
+    "ios": "wdio run config/wdio.ios.conf.ts",
+    "android:debug": "wdio run config/wdio.android.conf.ts --logLevel debug",
+    "ios:debug": "wdio run config/wdio.ios.conf.ts --logLevel debug",
+    "test": "echo \"Run: npm run android  OR  npm run ios\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.9.3",
+    "@wdio/appium-service": "^9.28.0",
+    "@wdio/cli": "^9.29.1",
+    "@wdio/globals": "^9.28.0",
+    "@wdio/local-runner": "^9.28.0",
+    "@wdio/mocha-framework": "^9.28.0",
+    "@wdio/spec-reporter": "^9.28.0",
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "webdriverio": "^9.28.0"
+  }
+}

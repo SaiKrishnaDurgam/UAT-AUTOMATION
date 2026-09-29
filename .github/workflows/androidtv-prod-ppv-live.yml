@@ -1,0 +1,239 @@
+name: AndroidTV.Prod.PPV.Live
+
+run-name: "AndroidTV.Prod.PPV.Live · ${{ inputs.COUNTRY }} · ${{ inputs.PPV_CONFIG }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      PPV_CONFIG:
+        description: "PPV JSON filename (for example: ppv_t_garcia_benn.json)"
+        required: true
+        type: string
+      COUNTRY:
+        description: "Country"
+        required: true
+        type: choice
+        default: GB
+        options: [GB, IE, US, AU, BR, AE, SA]
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: androidtv-prod-ppv-live
+  cancel-in-progress: false
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+  CI: 'true'
+  HEADLESS: 'false'
+  DAZN_ENV: prod
+  DAZN_REGION: ${{ inputs.COUNTRY }}
+  SOURCE: schedule
+  TV_TARGET: androidtv
+  ANDROIDTV_SERIAL: 172.26.83.48:5555
+  DEVICE_SERIAL: 172.26.83.48:5555
+  APP_PACKAGE: com.dazn
+  PPV_CONFIG_NAME: ${{ inputs.PPV_CONFIG }}
+
+jobs:
+  prepare:
+    name: Build AndroidTV live profile matrix
+    runs-on: [self-hosted, macOS, ARM64, chandrababu-runners]
+    timeout-minutes: 10
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - id: matrix
+        name: Build active paid, freemium, and frozen profiles
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const country = '${{ inputs.COUNTRY }}';
+          const ppvConfig = '${{ inputs.PPV_CONFIG }}';
+          const eventPath = path.join('config', 'events', path.basename(ppvConfig));
+          if (!fs.existsSync(eventPath)) throw new Error(`PPV config not found: ${ppvConfig}`);
+
+          const event = JSON.parse(fs.readFileSync(eventPath, 'utf8'));
+          const planConfig = JSON.parse(fs.readFileSync('config/DaznPlan.json', 'utf8'));
+          const userStatus = JSON.parse(fs.readFileSync('config/userstatus.json', 'utf8'));
+          if (!event.regions?.[country]) throw new Error(`${ppvConfig} is not available in ${country}: regions.${country} is missing.`);
+
+          const profiles = [
+            'freemium/standard_monthly',
+            'freemium/standard_apm',
+            'freemium/ultimate_apm',
+            'freemium/ultimate_upfront',
+            'frozen/standard_monthly',
+            'frozen/standard_apm',
+            'frozen/ultimate_apm',
+            'frozen/ultimate_upfront',
+            'active_standard_monthly/standard_monthly',
+            'active_standard_monthly/ultimate_apm',
+            'active_standard_monthly/ultimate_upfront',
+            'active_standard_apm/standard_apm',
+            'active_standard_apm/ultimate_apm',
+            'active_ultimate_apm/ultimate_apm',
+            'active_ultimate_upfront/ultimate_upfront',
+          ];
+
+          const hasValidCredentials = (userState) => {
+            const env = userStatus[userState]?.regions?.[country]?.environments?.prod;
+            return Boolean(env?.USER_EMAIL && env?.USER_PASSWORD && !env.USER_EMAIL.startsWith('TODO_') && !env.USER_PASSWORD.startsWith('TODO_'));
+          };
+
+          const matrix = profiles
+            .map((profile) => {
+              const [userState, plan] = profile.split('/');
+              return {
+                profile,
+                user_state: userState,
+                plan,
+                dev_mode_on: plan.startsWith('ultimate_') ? 'on' : 'off',
+              };
+            })
+            .filter((entry) => planConfig[entry.plan]?.regions?.[country])
+            .filter((entry) => hasValidCredentials(entry.user_state));
+
+          if (!matrix.length) throw new Error(`No AndroidTV live profiles with valid prod credentials were found for ${country}.`);
+          console.log(`AndroidTV live matrix for ${country}: ${matrix.length} jobs`);
+          for (const entry of matrix) console.log(`${entry.profile} DEV_MODE_ON=${entry.dev_mode_on}`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `matrix=${JSON.stringify(matrix)}\n`);
+          NODE
+
+  androidtv-prod-ppv-live:
+    needs: prepare
+    name: AndroidTV · ${{ matrix.profile }}
+    runs-on: [self-hosted, macOS, ARM64, chandrababu-runners]
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install root dependencies
+        shell: bash
+        run: npm ci
+
+      - name: Install Appium dependencies
+        shell: bash
+        run: npm ci --prefix appium
+
+      - name: Connect Android TV over ADB
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/connect-adb-device.sh "$DEVICE_SERIAL"
+
+      - name: Run AndroidTV PPV live profile
+        env:
+          USER_STATE: ${{ matrix.user_state }}
+          WEB_USER_STATE: ${{ matrix.user_state }}
+          PLAN: ${{ matrix.plan }}
+          DEV_MODE_ON: ${{ matrix.dev_mode_on }}
+          PPV_CONFIG: ${{ env.PPV_CONFIG_NAME }}
+          WEB_PPV_CONFIG: ${{ env.PPV_CONFIG_NAME }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run tv:ppv:e2e
+
+      - name: Upload AndroidTV PPV artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: androidtv-prod-ppv-live-${{ matrix.user_state }}-${{ matrix.plan }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            reports/**
+            playwright-report/**
+            test-results/**
+            appium/test-results/**
+            mobile_entry_url.txt
+            tv_ppv_report_metadata.json
+
+  workflow-summary:
+    needs: [prepare, androidtv-prod-ppv-live]
+    if: ${{ always() }}
+    name: Consolidated AndroidTV workflow report · ${{ inputs.COUNTRY }}
+    runs-on: [self-hosted, macOS, ARM64, chandrababu-runners]
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Download AndroidTV profile artifacts
+        if: ${{ always() }}
+        continue-on-error: true
+        uses: actions/download-artifact@v7
+        with:
+          pattern: androidtv-prod-ppv-live-*-*-${{ github.run_attempt }}
+          path: tv-summary-artifacts
+
+      - name: Prepare AndroidTV artifacts for workflow summary
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ppv-workflow-summary/job-artifacts
+          if [ ! -d tv-summary-artifacts ]; then
+            echo "No AndroidTV profile artifacts were downloaded for this run."
+            exit 0
+          fi
+
+          find tv-summary-artifacts -mindepth 1 -maxdepth 1 -type d -name 'androidtv-prod-ppv-live-*' -print | while IFS= read -r artifact_dir; do
+            artifact_name="$(basename "$artifact_dir")"
+            identity="${artifact_name#androidtv-prod-ppv-live-}"
+            identity="${identity%-${GITHUB_RUN_ATTEMPT}}"
+
+            case "$identity" in
+              *-standard_monthly) user_state="${identity%-standard_monthly}"; plan="standard_monthly" ;;
+              *-standard_apm) user_state="${identity%-standard_apm}"; plan="standard_apm" ;;
+              *-ultimate_apm) user_state="${identity%-ultimate_apm}"; plan="ultimate_apm" ;;
+              *-ultimate_upfront) user_state="${identity%-ultimate_upfront}"; plan="ultimate_upfront" ;;
+              *)
+                echo "::warning::Unable to parse AndroidTV artifact name: $artifact_name"
+                continue
+                ;;
+            esac
+
+            summary_dir="ppv-workflow-summary/job-artifacts/ppv-android-already-signed-in-androidtv-live-schedule-${user_state}_${plan}"
+            rm -rf "$summary_dir"
+            mkdir -p "$summary_dir"
+            cp -R "$artifact_dir/." "$summary_dir/"
+            echo "Prepared $artifact_name for summary as $(basename "$summary_dir")"
+          done
+
+      - name: Build AndroidTV workflow summary
+        if: ${{ always() }}
+        uses: ./.github/actions/ppv-workflow-summary
+        with:
+          title: AndroidTV PPV live workflow report · ${{ inputs.COUNTRY }}
+          ppv_config: ${{ inputs.PPV_CONFIG }}
+          country: ${{ inputs.COUNTRY }}
+          artifact_pattern: ppv-android-already-signed-in-androidtv-live-*
+          artifact_name: androidtv-prod-ppv-live-summary-${{ github.run_attempt }}
+          signed_in_status: ${{ needs.androidtv-prod-ppv-live.result }}
+
+      - name: Upload AndroidTV workflow summary
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: androidtv-prod-ppv-live-summary-${{ github.run_attempt }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: ppv-workflow-summary/**

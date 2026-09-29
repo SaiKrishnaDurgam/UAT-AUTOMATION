@@ -1,0 +1,125 @@
+name: FireTV.Prod.PPV.Existing User
+
+run-name: "FireTV.Prod.PPV.Existing User · ${{ inputs.COUNTRY }} · ${{ inputs.PPV_CONFIG }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      PPV_CONFIG:
+        description: "PPV JSON filename (for example: ppv_t_moses_hergovich.json)"
+        required: true
+        type: string
+      COUNTRY:
+        description: "Country"
+        required: true
+        type: choice
+        default: GB
+        options: [GB, IE, US, AU, BR, AE, SA]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: firetv-prod-ppv-existing-user
+  cancel-in-progress: false
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+  CI: 'true'
+  HEADLESS: 'false'
+  DAZN_ENV: prod
+  DAZN_REGION: ${{ inputs.COUNTRY }}
+  SOURCE: schedule
+  TV_TARGET: firetv
+  FIRETV_SERIAL: 172.26.81.184:5555
+  DEVICE_SERIAL: 172.26.81.184:5555
+  APP_PACKAGE: com.dazn
+  USER_STATE: active_standard_monthly
+  PPV_CONFIG_NAME: ${{ inputs.PPV_CONFIG }}
+
+jobs:
+  firetv-prod-ppv-existing-user:
+    name: FireTV.Prod.PPV.Existing User
+    runs-on: [self-hosted, macOS, ARM64, chandrababu-runners]
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install root dependencies
+        shell: bash
+        run: npm ci
+
+      - name: Install Appium dependencies
+        shell: bash
+        run: npm ci --prefix appium
+
+      - name: Connect FireTV over ADB
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/connect-adb-device.sh "$DEVICE_SERIAL"
+
+      - name: Scenario 1 · Standard Monthly
+        env:
+          PLAN: standard_monthly
+          PPV_CONFIG: ${{ env.PPV_CONFIG_NAME }}
+          WEB_PPV_CONFIG: ${{ env.PPV_CONFIG_NAME }}
+        shell: bash
+        run: |
+          set +e
+          npm run tv:ppv:e2e
+          exit_code=$?
+          echo "SCENARIO_1_EXIT=$exit_code" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Clear and force-stop DAZN app before scenario 2
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/connect-adb-device.sh "$DEVICE_SERIAL"
+          npm --prefix appium run reset:android-app
+
+      - name: Scenario 2 · Ultimate APM
+        if: ${{ always() }}
+        env:
+          PLAN: ultimate_apm
+          DEV_MODE_ON: 'on'
+          PPV_CONFIG: ${{ env.PPV_CONFIG_NAME }}
+          WEB_PPV_CONFIG: ${{ env.PPV_CONFIG_NAME }}
+        shell: bash
+        run: |
+          set +e
+          npm run tv:ppv:e2e
+          exit_code=$?
+          echo "SCENARIO_2_EXIT=$exit_code" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Fail if any FireTV scenario failed
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          scenario_1_exit="${SCENARIO_1_EXIT:-1}"
+          scenario_2_exit="${SCENARIO_2_EXIT:-1}"
+          echo "Scenario 1 exit code: $scenario_1_exit"
+          echo "Scenario 2 exit code: $scenario_2_exit"
+          if [ "$scenario_1_exit" -ne 0 ] || [ "$scenario_2_exit" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Upload TV PPV artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: firetv-prod-ppv-existing-user-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            reports/**
+            playwright-report/**
+            test-results/**
+            appium/test-results/**
+            mobile_entry_url.txt
+            tv_ppv_report_metadata.json

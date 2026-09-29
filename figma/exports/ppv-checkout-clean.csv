@@ -1,0 +1,6 @@
+Section,Component,Type,Text Content,Font Size,Font Weight,Text Color,Background,Width (px),Height (px),Padding,Border Radius,Border
+"Page Header","Slot/Header","FRAME","","","","","","375","54","","",""
+"Page Header",".header-component-mobile","INSTANCE","","","","","#080e12","375","54","0px 16px 0px 16px","",""
+"Page Header","DAZN Logo","IMAGE","","","","","","32","32","","",""
+"Page Title","Page Title","TEXT","Choose how to pay","16","700","#f9fafa","#f9fafa","255","54","","",""
+"Body Text","Body copy","TEXT","Choose how you'll pay for DAZN Standard after your 7-day free trial.","14","400","#ffffff","#ffffff","343","42","","",""

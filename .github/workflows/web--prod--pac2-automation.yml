@@ -1,0 +1,170 @@
+name: "Web · Prod · PAC 2.0 Partner Automation"
+run-name: "Web · Prod · PAC 2.0 · ${{ inputs.PAC_PARTNER }} · ${{ inputs.RATE_PLAN }} · ${{ inputs.SCENARIO }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      PAC_PARTNER:
+        description: "Partner configuration name (e.g. simplysubscribe_br, viking_be)"
+        required: true
+        type: choice
+        default: "simplysubscribe_br"
+        options:
+          - "simplysubscribe_br"
+          - "viking_be"
+      RATE_PLAN:
+        description: "Rate Plan tier to test"
+        required: true
+        type: choice
+        default: "standard_flex"
+        options:
+          - "standard_flex"
+          - "ultimate_annual"
+          - "all"
+      SCENARIO:
+        description: "User Scenario to execute"
+        required: true
+        type: choice
+        default: "all"
+        options:
+          - "all"
+          - "new_user"
+          - "active_paid_pre_auth"
+          - "active_paid_logged_out"
+          - "freemium_pre_auth"
+          - "freemium_logged_out"
+          - "frozen_pre_auth"
+          - "frozen_logged_out"
+          - "other_partner_pac_pre_auth"
+          - "other_partner_pac_logged_out"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  prepare-matrix:
+    name: Build execution matrix
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 15
+    outputs:
+      rate_plans: ${{ steps.set-plans.outputs.rate_plans }}
+      grep_filter: ${{ steps.set-grep.outputs.grep_filter }}
+    steps:
+      - id: set-plans
+        shell: bash
+        run: |
+          if [ "${{ inputs.RATE_PLAN }}" = "all" ]; then
+            echo 'rate_plans=["standard_flex", "ultimate_annual"]' >> "$GITHUB_OUTPUT"
+          else
+            echo 'rate_plans=["${{ inputs.RATE_PLAN }}"]' >> "$GITHUB_OUTPUT"
+          fi
+
+      - id: set-grep
+        shell: bash
+        run: |
+          case "${{ inputs.SCENARIO }}" in
+            new_user)
+              echo 'grep_filter=New User Partner Signup' >> "$GITHUB_OUTPUT"
+              ;;
+            active_paid_pre_auth)
+              echo 'grep_filter=Active Paid User - Pre-Authenticated' >> "$GITHUB_OUTPUT"
+              ;;
+            active_paid_logged_out)
+              echo 'grep_filter=Active Paid User - Logged-Out' >> "$GITHUB_OUTPUT"
+              ;;
+            freemium_pre_auth)
+              echo 'grep_filter=Freemium User - Pre-Authenticated' >> "$GITHUB_OUTPUT"
+              ;;
+            freemium_logged_out)
+              echo 'grep_filter=Freemium User - Logged-Out' >> "$GITHUB_OUTPUT"
+              ;;
+            frozen_pre_auth)
+              echo 'grep_filter=Frozen User - Pre-Authenticated' >> "$GITHUB_OUTPUT"
+              ;;
+            frozen_logged_out)
+              echo 'grep_filter=Frozen User - Logged-Out' >> "$GITHUB_OUTPUT"
+              ;;
+            other_partner_pac_pre_auth)
+              echo 'grep_filter=Other Partner PAC User - Pre-Authenticated' >> "$GITHUB_OUTPUT"
+              ;;
+            other_partner_pac_logged_out)
+              echo 'grep_filter=Other Partner PAC User - Logged-Out' >> "$GITHUB_OUTPUT"
+              ;;
+            all)
+              echo 'grep_filter=PAC Partner Automation' >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo 'grep_filter=PAC Partner Automation' >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+  run-pac-suite:
+    needs: prepare-matrix
+    name: PAC 2.0 Prod · ${{ matrix.rate_plan }} · ${{ inputs.SCENARIO }}
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        rate_plan: ${{ fromJSON(needs.prepare-matrix.outputs.rate_plans) }}
+    env:
+      CI: 'true'
+      HEADLESS: 'true'
+      PAC_PARTNER: ${{ inputs.PAC_PARTNER }}
+      RATE_PLAN: ${{ matrix.rate_plan }}
+      DAZN_ENV: 'prod'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Clean stale local reports
+        shell: bash
+        run: rm -rf test-results playwright-report reports
+
+      - name: Install dependencies
+        shell: bash
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Install Playwright browsers
+        shell: bash
+        run: npx playwright install chromium
+
+      - name: Execute PAC Playwright Tests
+        shell: bash
+        run: |
+          export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin
+          npx playwright test tests/pac2/pac2.spec.ts -g "${{ needs.prepare-matrix.outputs.grep_filter }}" --project=chromium
+
+      - name: Upload Playwright Reports & Trace Artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pac2-prod-report-${{ inputs.PAC_PARTNER }}-${{ matrix.rate_plan }}-${{ github.run_id }}
+          path: |
+            test-results/
+            playwright-report/
+            reports/
+          retention-days: 7
+          if-no-files-found: ignore
+
+  workflow-summary:
+    needs: [prepare-matrix, run-pac-suite]
+    if: ${{ always() }}
+    name: Consolidated workflow report · ${{ inputs.PAC_PARTNER }}
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Create PAC workflow summary
+        uses: ./.github/actions/pac-workflow-summary
+        with:
+          title: PAC 2.0 Prod · ${{ inputs.PAC_PARTNER }} · Consolidated Report
+          pac_partner: ${{ inputs.PAC_PARTNER }}
+          pac_version: "2.0"
+          env: prod
+          artifact_pattern: pac2-prod-report-${{ inputs.PAC_PARTNER }}-*-${{ github.run_id }}
+          artifact_name: pac2-prod-${{ inputs.PAC_PARTNER }}-workflow-summary-${{ github.run_id }}

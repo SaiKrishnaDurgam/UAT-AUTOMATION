@@ -1,0 +1,44 @@
+{
+  "eventKey": "ufc_331",
+  "PPV_NAME": "UFC 331: Van vs Pantoja 2",
+  "PPV_DISPLAY_NAME": "UFC 331: Van vs Pantoja 2",
+  "SPORT": "MMA",
+  "PPV_TYPE": "normal",
+  "PPV_ENTITLEMENT_ID": "ppv_t_ufc_331",
+  "PPV_PROMOTER": "UFC",
+  "HAS_BUNDLE": false,
+  "PPV_DEV_MODE": true,
+  "DEFAULT_SIGNUP_DEVMODE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": false,
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "UFC",
+    "PPV_ENTITLEMENT_ID": "ppv_t_ufc_331",
+    "PPV_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "PPV_UTC_DATE": "2026-09-20T01:00:00Z",
+    "PPV_LOCATION": "Canada",
+    "BOXING_BANNER_SUBTITLE": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "PPV_CARD_TITLE": "UFC 331: Van vs Pantoja 2",
+    "PPV_CARD_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "BANNER_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "HOME_POPUP_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja."
+  },
+  "regions": {
+    "CA": {
+      "OFFER_TYPE": "none",
+      "MOBILE_PPV_DATE": "19 SEP 9:00 PM",
+      "MOBILE_BANNER_TITLE": "UFC 331: Van vs Pantoja 2",
+      "MOBILE_BANNER_DATE_TIME": "Sat 19th Sep at 21:00",
+      "MOBILE_BANNER_DAY": "Sat",
+      "MOBILE_BANNER_DATE": "19th",
+      "MOBILE_BANNER_MONTH": "September",
+      "MOBILE_BANNER_TIME": "9:00pm",
+      "MOBILE_BANNER_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+      "MOBILE_SEARCH_PPV_DATE": "Sat 19th September at 9:00 PM",
+      "MOBILE_SCHEDULE_DAY": "SAT",
+      "MOBILE_SCHEDULE_MONTH": "SEP",
+      "MOBILE_SCHEDULE_DATE": "19",
+      "MOBILE_SCHEDULE_TIME": "9:00PM"
+    }
+  }
+}

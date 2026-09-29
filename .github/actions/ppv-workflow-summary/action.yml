@@ -1,0 +1,419 @@
+name: Create PPV workflow summary
+description: Collects locally stored job reports and publishes one consolidated workflow report.
+inputs:
+  title:
+    required: true
+  ppv_config:
+    required: true
+  country:
+    required: true
+  artifact_pattern:
+    required: true
+  artifact_name:
+    required: true
+  new_user_status:
+    required: false
+    default: not-run
+  sign_in_status:
+    required: false
+    default: not-run
+  signed_in_status:
+    required: false
+    default: not-run
+runs:
+  using: composite
+  steps:
+    - name: Download all job reports from GitHub artifacts
+      uses: actions/download-artifact@v7
+      with:
+        pattern: ${{ inputs.artifact_pattern }}
+        path: downloaded-job-artifacts
+        merge-multiple: false
+      continue-on-error: true
+    - name: Find latest prior workflow summary on rerun
+      id: prior-summary
+      shell: bash
+      env:
+        ARTIFACT_NAME: ${{ inputs.artifact_name }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        node <<'NODE'
+        const https = require('https');
+
+        const attempt = Number(process.env.GITHUB_RUN_ATTEMPT || '1');
+        const artifactName = process.env.ARTIFACT_NAME || '';
+        const output = process.env.GITHUB_OUTPUT;
+        if (attempt <= 1 || !artifactName || !output) process.exit(0);
+
+        const prefix = artifactName.replace(/-\d+$/, '');
+        const token = process.env.GITHUB_TOKEN;
+        const repo = process.env.GITHUB_REPOSITORY;
+        const runId = process.env.GITHUB_RUN_ID;
+        if (!token || !repo || !runId) process.exit(0);
+
+        function request(path) {
+          return new Promise((resolve, reject) => {
+            const req = https.request({
+              hostname: 'api.github.com',
+              path,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/vnd.github+json',
+                'User-Agent': 'ppv-workflow-summary',
+                'X-GitHub-Api-Version': '2022-11-28'
+              }
+            }, res => {
+              let body = '';
+              res.on('data', chunk => { body += chunk; });
+              res.on('end', () => {
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                  resolve(JSON.parse(body));
+                } else {
+                  reject(new Error(`GET ${path} failed with ${res.statusCode}: ${body}`));
+                }
+              });
+            });
+            req.on('error', reject);
+            req.end();
+          });
+        }
+
+        async function main() {
+          const artifacts = [];
+          for (let page = 1; ; page += 1) {
+            const data = await request(`/repos/${repo}/actions/runs/${runId}/artifacts?per_page=100&page=${page}`);
+            const pageArtifacts = data.artifacts || [];
+            artifacts.push(...pageArtifacts);
+            if (pageArtifacts.length < 100) break;
+          }
+
+          const previous = artifacts
+            .map(artifact => ({
+              ...artifact,
+              attempt: Number((artifact.name || '').slice(prefix.length + 1))
+            }))
+            .filter(artifact =>
+              !artifact.expired &&
+              artifact.name.startsWith(`${prefix}-`) &&
+              Number.isInteger(artifact.attempt) &&
+              artifact.attempt > 0 &&
+              artifact.attempt < attempt
+            )
+            .sort((a, b) => b.attempt - a.attempt)[0];
+
+          if (previous) {
+            require('fs').appendFileSync(output, `artifact_id=${previous.id}\n`);
+            console.log(`Using prior workflow summary artifact "${previous.name}".`);
+          } else {
+            console.log('No prior workflow summary artifact found; building from current attempt only.');
+          }
+        }
+
+        main().catch(error => {
+          console.log(`Prior workflow summary lookup skipped: ${error.message}`);
+        });
+        NODE
+    - name: Download prior workflow summary on rerun
+      if: ${{ steps.prior-summary.outputs.artifact_id != '' }}
+      shell: bash
+      continue-on-error: true
+      env:
+        ARTIFACT_ID: ${{ steps.prior-summary.outputs.artifact_id }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        mkdir -p prior-workflow-summary
+        curl --fail --location --retry 3 \
+          -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/artifacts/${ARTIFACT_ID}/zip" \
+          -o prior-workflow-summary.zip
+        unzip -q prior-workflow-summary.zip -d prior-workflow-summary
+    - name: Download prior job reports when no summary is available
+      if: ${{ github.run_attempt > 1 && steps.prior-summary.outputs.artifact_id == '' }}
+      shell: bash
+      env:
+        ARTIFACT_PATTERN: ${{ inputs.artifact_pattern }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        node <<'NODE'
+        const fs = require('fs');
+        const https = require('https');
+
+        const attempt = Number(process.env.GITHUB_RUN_ATTEMPT || '1');
+        const pattern = process.env.ARTIFACT_PATTERN || '';
+        const token = process.env.GITHUB_TOKEN;
+        const repo = process.env.GITHUB_REPOSITORY;
+        const runId = process.env.GITHUB_RUN_ID;
+        if (!token || !repo || !runId || !pattern || attempt <= 1) process.exit(0);
+
+        const artifactPattern = new RegExp(`^${pattern
+          .split('*')
+          .map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          .join('.*')}$`);
+
+        function request(path) {
+          return new Promise((resolve, reject) => {
+            const req = https.request({
+              hostname: 'api.github.com',
+              path,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/vnd.github+json',
+                'User-Agent': 'ppv-workflow-summary',
+                'X-GitHub-Api-Version': '2022-11-28'
+              }
+            }, res => {
+              let body = '';
+              res.on('data', chunk => { body += chunk; });
+              res.on('end', () => {
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                  resolve(JSON.parse(body));
+                } else {
+                  reject(new Error(`GET ${path} failed with ${res.statusCode}: ${body}`));
+                }
+              });
+            });
+            req.on('error', reject);
+            req.end();
+          });
+        }
+
+        async function main() {
+          const artifacts = [];
+          for (let page = 1; ; page += 1) {
+            const data = await request(`/repos/${repo}/actions/runs/${runId}/artifacts?per_page=100&page=${page}`);
+            const pageArtifacts = data.artifacts || [];
+            artifacts.push(...pageArtifacts);
+            if (pageArtifacts.length < 100) break;
+          }
+
+          const priorReports = artifacts
+            .map(artifact => ({
+              ...artifact,
+              attempt: Number((artifact.name || '').match(/-attempt-(\d+)$/)?.[1])
+            }))
+            .filter(artifact =>
+              !artifact.expired &&
+              artifactPattern.test(artifact.name || '') &&
+              Number.isInteger(artifact.attempt) &&
+              artifact.attempt > 0 &&
+              artifact.attempt < attempt
+            )
+            .sort((a, b) => a.attempt - b.attempt || a.id - b.id);
+
+          fs.writeFileSync(
+            'prior-raw-artifacts.tsv',
+            priorReports.map(artifact => `${artifact.id}\t${artifact.name}`).join('\n')
+          );
+          console.log(`Found ${priorReports.length} prior job report artifact(s).`);
+        }
+
+        main().catch(error => {
+          console.error(`Unable to find prior job report artifacts: ${error.message}`);
+          process.exitCode = 1;
+        });
+        NODE
+        if [ ! -s prior-raw-artifacts.tsv ]; then
+          echo "No prior job report artifacts found."
+          exit 0
+        fi
+        mkdir -p prior-raw-job-artifacts
+        while IFS=$'\t' read -r artifact_id artifact_name; do
+          target="prior-raw-job-artifacts/$artifact_name"
+          mkdir -p "$target"
+          curl --fail --location --retry 3 \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" \
+            -o "$target/artifact.zip"
+          unzip -q "$target/artifact.zip" -d "$target"
+          rm "$target/artifact.zip"
+        done < prior-raw-artifacts.tsv
+    - name: Build workflow summary
+      shell: bash
+      env:
+        REPORT_TITLE: ${{ inputs.title }}
+        PPV_CONFIG: ${{ inputs.ppv_config }}
+        COUNTRY: ${{ inputs.country }}
+        NEW_USER_STATUS: ${{ inputs.new_user_status }}
+        SIGN_IN_STATUS: ${{ inputs.sign_in_status }}
+        SIGNED_IN_STATUS: ${{ inputs.signed_in_status }}
+        ARTIFACT_PATTERN: ${{ inputs.artifact_pattern }}
+      run: |
+        set -euo pipefail
+        report_dir=ppv-workflow-summary
+        mkdir -p "$report_dir/job-artifacts"
+        # On a rerun, use the previous complete summary as the baseline. A
+        # rerun emits artifacts only for selected jobs, so replace matching
+        # matrix entries with the current attempt rather than dropping jobs
+        # that passed in an earlier attempt.
+        prior_artifacts_dir="prior-workflow-summary/job-artifacts"
+        if [ -d "$prior_artifacts_dir" ]; then
+          cp -R "$prior_artifacts_dir/." "$report_dir/job-artifacts/"
+          echo "Restored prior workflow summary job reports."
+        fi
+        copy_current_report() {
+          local source_dir="$1"
+          local source_name normalized_name
+          source_name="$(basename "$source_dir")"
+          normalized_name="$(printf '%s' "$source_name" | sed -E 's/-attempt-[0-9]+$//')"
+          find "$report_dir/job-artifacts" -mindepth 1 -maxdepth 1 -type d \
+            \( -name "$source_name" -o -name "${normalized_name}-attempt-*" \) -exec rm -rf {} +
+          cp -R "$source_dir" "$report_dir/job-artifacts/"
+        }
+        # If a prior summary upload failed, reconstruct its baseline from the
+        # retained per-job artifacts before applying this attempt's reports.
+        raw_artifact_pattern="$(printf '%s' "$ARTIFACT_PATTERN" | sed -E 's/-attempt-[0-9]+$/-attempt-*/')"
+        if [ -d prior-raw-job-artifacts ]; then
+          while IFS= read -r raw_job_dir; do
+            copy_current_report "$raw_job_dir"
+          done < <(find prior-raw-job-artifacts -mindepth 1 -maxdepth 1 -type d -name "$raw_artifact_pattern" -print | sort -V)
+          echo "Restored prior job reports after missing workflow summary."
+        fi
+        # 1. Copy reports from this workflow attempt when the summary happens
+        # to run on the same self-hosted machine as a test job.
+        reports_root="${PPV_REPORTS_ROOT:-/tmp/ppv-reports}"
+        run_reports_dir="${reports_root}/${GITHUB_RUN_ID}/attempt-${GITHUB_RUN_ATTEMPT}"
+        if [ -d "$run_reports_dir" ]; then
+          while IFS= read -r -d '' report_dir_path; do
+            copy_current_report "$report_dir_path"
+          done < <(find "$run_reports_dir" -mindepth 1 -maxdepth 1 -type d -name "$ARTIFACT_PATTERN" ! -name "*workflow-summary*" -print0)
+        else
+          echo "No local PPV report directory found at $run_reports_dir"
+        fi
+        # 2. Copy only current-attempt reports downloaded from GitHub artifacts.
+        if [ -d downloaded-job-artifacts ]; then
+          find downloaded-job-artifacts -mindepth 1 -maxdepth 1 -type d | while read -r dl_job_dir; do
+            copy_current_report "$dl_job_dir"
+          done
+        fi
+        node "$GITHUB_ACTION_PATH/compile.js"
+    - name: Remove Playwright trace blobs from consolidated bundle
+      shell: bash
+      run: |
+        set -euo pipefail
+        # Remove Playwright trace data bundles (not read by compile.js)
+        find ppv-workflow-summary/job-artifacts -type d -name data -path "*/playwright-report/data" -exec rm -rf {} + 2>/dev/null || true
+        # Remove Playwright raw trace zips from test-results
+        find ppv-workflow-summary/job-artifacts -name "trace.zip" -path "*/test-results/*" -delete 2>/dev/null || true
+        echo "🧹 Removed Playwright trace blobs from consolidated bundle"
+    - name: Store consolidated workflow report locally
+      shell: bash
+      env:
+        ARTIFACT_NAME: ${{ inputs.artifact_name }}
+      run: |
+        set -euo pipefail
+        reports_root="${PPV_REPORTS_ROOT:-/tmp/ppv-reports}"
+        summary_dir="${reports_root}/${GITHUB_RUN_ID}/attempt-${GITHUB_RUN_ATTEMPT}/${ARTIFACT_NAME}"
+        rm -rf "$summary_dir"
+        mkdir -p "$summary_dir"
+        cp -R ppv-workflow-summary/. "$summary_dir/"
+        echo "Stored consolidated workflow report locally at $summary_dir"
+    - name: Upload consolidated report as GitHub artifact
+      id: upload-summary
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: ppv-workflow-summary/
+        retention-days: 30
+      continue-on-error: true
+    - name: Delete temporary job report artifacts
+      if: ${{ always() && steps.upload-summary.outcome == 'success' }}
+      shell: bash
+      env:
+        ARTIFACT_PATTERN: ${{ inputs.artifact_pattern }}
+        ARTIFACT_NAME: ${{ inputs.artifact_name }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        set +e
+        node <<'NODE'
+        const https = require('https');
+
+        const token = process.env.GITHUB_TOKEN;
+        const repo = process.env.GITHUB_REPOSITORY;
+        const runId = process.env.GITHUB_RUN_ID;
+        const pattern = process.env.ARTIFACT_PATTERN || '';
+        const keepName = process.env.ARTIFACT_NAME || '';
+
+        if (!token || !repo || !runId || !pattern) {
+          console.log('Skipping temporary artifact cleanup; missing GitHub context.');
+          process.exit(0);
+        }
+
+        // `artifact_pattern` is a GitHub Actions glob. Convert its `*`
+        // wildcards so cleanup uses the same matching semantics.
+        const artifactPattern = new RegExp(`^${pattern
+          .split('*')
+          .map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          .join('.*')}$`);
+
+        function request(method, path) {
+          return new Promise((resolve, reject) => {
+            const req = https.request({
+              hostname: 'api.github.com',
+              path,
+              method,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/vnd.github+json',
+                'User-Agent': 'ppv-workflow-summary',
+                'X-GitHub-Api-Version': '2022-11-28'
+              }
+            }, res => {
+              let body = '';
+              res.on('data', chunk => { body += chunk; });
+              res.on('end', () => {
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                  resolve(body ? JSON.parse(body) : {});
+                } else {
+                  reject(new Error(`${method} ${path} failed with ${res.statusCode}: ${body}`));
+                }
+              });
+            });
+            req.on('error', reject);
+            req.end();
+          });
+        }
+
+        async function main() {
+          const artifacts = [];
+          for (let page = 1; ; page += 1) {
+            const listPath = `/repos/${repo}/actions/runs/${runId}/artifacts?per_page=100&page=${page}`;
+            const data = await request('GET', listPath);
+            const pageArtifacts = data.artifacts || [];
+            artifacts.push(...pageArtifacts.filter(artifact =>
+              artifact.name !== keepName && artifactPattern.test(artifact.name)
+            ));
+            if (pageArtifacts.length < 100) break;
+          }
+
+          for (const artifact of artifacts) {
+            await request('DELETE', `/repos/${repo}/actions/artifacts/${artifact.id}`);
+            console.log(`Deleted temporary job artifact: ${artifact.name}`);
+          }
+
+          if (artifacts.length === 0) {
+            console.log('No temporary job report artifacts found to delete.');
+          }
+        }
+
+        main().catch(err => {
+          console.log(`Temporary artifact cleanup skipped: ${err.message}`);
+        });
+        NODE
+    - name: Clean up run temp reports
+      if: ${{ always() && steps.upload-summary.outcome == 'success' }}
+      shell: bash
+      env:
+        ARTIFACT_NAME: ${{ inputs.artifact_name }}
+      run: |
+        set -euo pipefail
+        reports_root="${PPV_REPORTS_ROOT:-/tmp/ppv-reports}"
+        run_dir="${reports_root}/${GITHUB_RUN_ID}/attempt-${GITHUB_RUN_ATTEMPT}"
+        if [ -d "$run_dir" ]; then
+          find "$run_dir" -mindepth 1 -maxdepth 1 ! -name "$ARTIFACT_NAME" -exec rm -rf {} +
+          echo "🧹 Cleaned up temp reports at $run_dir, preserving $ARTIFACT_NAME"
+        fi

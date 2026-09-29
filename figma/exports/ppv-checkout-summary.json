@@ -1,0 +1,48 @@
+{
+  "page": "📱 Mobile",
+  "section": "Checkout",
+  "totalElements": 205,
+  "colors": [
+    "#080e12",
+    "#ffffff",
+    "#d9d9d9",
+    "#f9fafa",
+    "#6d7377",
+    "#79e99c",
+    "#cfa120",
+    "#b3b9bb",
+    "#043820"
+  ],
+  "textColors": [
+    "#ffffff",
+    "#f9fafa",
+    "#6d7377",
+    "#79e99c",
+    "#b3b9bb",
+    "#080e12"
+  ],
+  "fontSizes": [
+    14,
+    12,
+    18,
+    16,
+    15,
+    22,
+    17,
+    23
+  ],
+  "fontWeights": [
+    400,
+    700,
+    600,
+    510,
+    500,
+    350
+  ],
+  "fontFamilies": [
+    "DAZN Oscine",
+    "SF Pro Text",
+    "SF Pro",
+    "SF Compact"
+  ]
+}

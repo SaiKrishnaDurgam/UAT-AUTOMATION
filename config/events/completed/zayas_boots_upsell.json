@@ -1,0 +1,155 @@
+{
+  "eventKey": "zayas_boots_upsell",
+  "PPV_NAME": "Zayas vs. Boots",
+  "PPV_DISPLAY_NAME": "Zayas vs. Boots",
+  "SPORT": "Boxing",
+  "PPV_TYPE": "upsell",
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "DAZN Boxing",
+    "PPV_LOCATION": "Barclays Center, Brooklyn",
+    "BOXING_BANNER_SUBTITLE": "Main Event • 27 Jun • 16:30",
+    "PPV_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "PPV_PRICE": "£24.99",
+    "PPV_PRICE_RAW": "24.99",
+    "WELCOME_TILE_DATE": "June 27",
+    "WELCOME_RAIL_HEADING": "Don't miss live on DAZN",
+    "PPV_CARD_LABEL": "PPV: Zayas vs. Boots",
+    "PPV_PAGE_TITLE": "Choose the right plan for you.",
+    "PPV_PAGE_SUBTITLE": "To watch your pay-per-view, you'll need a DAZN plan.",
+    "ULTIMATE_CARD_TITLE": "DAZN Ultimate",
+    "ULTIMATE_PRICE": "£19.99",
+    "ULTIMATE_CROSSED_PRICE": "£24.99",
+    "UPSELL_CROSSED_PRICE": "N/A",
+    "ULTIMATE_BADGE": "The Ultimate Fan Package",
+    "PPV_CTA": "Continue with pay-per-view",
+    "PLAN_PAGE_TITLE": "Choose a plan",
+    "FLEX_CARD_TITLE": "Flex – Pay Monthly",
+    "FLEX_TRIAL_BADGE": "{{FREE_TRIAL_DAYS}} DAY FREE TRIAL",
+    "FLEX_FUTURE_DATE": "In {{FREE_TRIAL_DAYS}} days • 13 June 2026",
+    "FLEX_FUTURE_TEXT": "£25.99/month",
+    "ANNUAL_CARD_TITLE": "Annual - Pay Monthly",
+    "ANNUAL_FREE_BADGE": "1 MONTH FREE",
+    "ANNUAL_SAVE_BADGE": "SAVE £135.99 A YEAR",
+    "ANNUAL_PRICE_TEXT": "then £15.99/month for 11 months",
+    "ANNUAL_CONTRACT_TEXT": "Annual contract. Auto renews.",
+    "PLAN_CTA": "Continue with {{FREE_TRIAL_DAYS}}-day Free Trial",
+    "PAYMENT_TITLE": "Choose how to pay after your free trial",
+    "PAYMENT_TIER": "DAZN Standard",
+    "PAYMENT_FREE_TRIAL": "£0",
+    "PAYMENT_PPV_LINE": "£24.99",
+    "PAYMENT_TODAY": "£24.99",
+    "PAYMENT_CROSSED": "£24.99",
+    "PAYMENT_CANCELLATION": "In {{FREE_TRIAL_DAYS}} days, you'll be charged £25.99/month. Cancel anytime before the end of the trial.",
+    "PAYMENT_ULTIMATE_UPSELL": "Switch to DAZN Ultimate and enjoy pay-per-views at no extra cost – £19.99/month",
+    "SUCCESS_HEADING": "Your payment was successful",
+    "UPSELL_HEADING": "Don't miss Fury vs Hall – add the PPV to your plan today.",
+    "UPSELL_DESCRIPTION": "Watch the World's Strongest Man takes on the Fury dynasty in one of the biggest crossover mismatches in modern boxing|Watch the World's Strongest Man takes on the Fury dynasty in one of the biggest weight mismatches in modern boxing",
+    "UPSELL_DATE": "Saturday at 18:00",
+    "UPSELL_PRICE": "£14.99",
+    "UPSELL_BUY_CTA": "Buy Now For £14.99",
+    "UPSELL_PPV_TITLE": "PPV: Fury vs. Hall",
+    "UPSELL_PPV_DATE": "Saturday at 18:00",
+    "UPSELL_PPV_PRICE": "£14.99",
+    "UPSELL_PPV_TYPE": "One time payment",
+    "UPSELL_PPV_TODAY": "£14.99",
+    "UPSELL_PPV_TEXT": "In order to purchase this event, please choose from the payment options below",
+    "UPSELL_PPV_SAVED_CARD": "VISA - **** 1111, Exp 03/30",
+    "UPSELL_PPV_CVV": "737",
+    "UPSELL_CVV": "737",
+    "UPSELL_PPV_NAME": "Fury vs. Hall",
+    "SECOND_SUCCESS_HEADING": "Your payment was successful",
+    "BET_OFFER_TITLE": "Exclusive DAZN Bet Offer",
+    "BET_HEADING": "Get up to £50 in Free Bets every month with DAZN Bet",
+    "BET_CTA": "Activate Betting",
+    "BET_DISMISS": "Maybe later"
+  },
+  "regions": {
+    "GB": {
+      "LANDING_PAGE_PPV_DATE": "27 June",
+      "PPV_LOCATION": "Barclays Center, Brooklyn",
+      "PPV_DATE": "Sat 27th Jun at 16:30",
+      "PPV_TIME": "16:30",
+      "WELCOME_TILE_DATE": "Saturday at 10:30 PM",
+      "WELCOME_RAIL_HEADING": "DAZN standard",
+      "PAYMENT_TITLE": "Add to your subscription",
+      "SUCCESS_HEADING": "Thank you",
+      "UPSELL_HEADING": "Upgrade to the Ultimate Fan Package",
+      "UPSELL_BUY_CTA": "Get included in DAZN Ultimate",
+      "UPSELL_PPV_TITLE": "Choose how to pay",
+      "UPSELL_PPV_SAVED_CARD": "Use saved card ending in 1111",
+      "UPSELL_PPV_CVV": "123",
+      "UPSELL_CVV": "123",
+      "BET_OFFER_TITLE": "DAZN Bet Offer"
+    },
+    "US": {
+      "LANDING_PAGE_PPV_DATE": "27 June",
+      "PPV_PRICE": "$74.99",
+      "TODAY_YOU_PAY_PRICE": "$74.99",
+      "UPSELL_PRICE": "$49.99",
+      "PPV_DATE": "Saturday at 4:30 PM",
+      "PPV_TIME": "4:30 PM",
+      "WELCOME_TILE_DATE": "June 27"
+    },
+    "AU": {
+      "LANDING_PAGE_PPV_DATE": "28 June",
+      "PPV_PRICE": "$49.99",
+      "TODAY_YOU_PAY_PRICE": "$49.99",
+      "UPSELL_PRICE": "$39.99"
+    },
+    "AE": {
+      "LANDING_PAGE_PPV_DATE": "27 June",
+      "PPV_PRICE": "AED 72.99",
+      "TODAY_YOU_PAY_PRICE": "AED 72.99",
+      "UPSELL_PRICE": "AED 72.99"
+    }
+  },
+  "upsell_ppv": {
+    "UPSELL_HEADING": "Don't miss Fury vs Hall – add the PPV to your plan today.",
+    "UPSELL_DESCRIPTION": "Watch the World's Strongest Man takes on the Fury dynasty in one of the biggest crossover mismatches in modern boxing|Watch the World's Strongest Man takes on the Fury dynasty in one of the biggest weight mismatches in modern boxing",
+    "UPSELL_DATE": "Saturday at 18:00",
+    "UPSELL_PRICE": "£14.99",
+    "UPSELL_BUY_CTA": "Buy Now For £14.99",
+    "UPSELL_PPV_TITLE": "PPV: Fury vs. Hall",
+    "UPSELL_PPV_DATE": "Saturday at 18:00",
+    "UPSELL_PPV_PRICE": "£14.99",
+    "UPSELL_PPV_TYPE": "One time payment",
+    "UPSELL_PPV_TODAY": "£14.99",
+    "UPSELL_PPV_TEXT": "In order to purchase this event, please choose from the payment options below",
+    "UPSELL_PPV_SAVED_CARD": "VISA - **** 1111, Exp 03/30",
+    "UPSELL_PPV_CVV": "737",
+    "UPSELL_CVV": "737",
+    "UPSELL_PPV_NAME": "Fury vs. Hall",
+    "SECOND_SUCCESS_HEADING": "Your payment was successful",
+    "BET_OFFER_TITLE": "Exclusive DAZN Bet Offer",
+    "BET_HEADING": "Get up to £50 in Free Bets every month with DAZN Bet",
+    "BET_CTA": "Activate Betting",
+    "BET_DISMISS": "Maybe later"
+  },
+  "variants": {
+    "variant1": {
+      "detection": "subscribe without a pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    },
+    "variant3": {
+      "detection": "2 fight",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "subscribe without a pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

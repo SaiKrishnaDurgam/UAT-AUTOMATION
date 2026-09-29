@@ -1,0 +1,60 @@
+{
+  "eventKey": "aj_joshua_prenga",
+  "PPV_NAME": "Joshua vs. Prenga",
+  "PPV_DISPLAY_NAME": "Joshua vs. Prenga",
+  "SPORT": "Boxing",
+  "PPV_TYPE": "normal",
+  "PPV_ENTITLEMENT_ID": "ppv_t_joshua_prenga",
+  "PPV_PROMOTER": "Matchroom Boxing",
+  "HAS_BUNDLE": false,
+  "PPV_DEV_MODE": false,
+  "DEFAULT_SIGNUP_DEVMODE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": true,
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "Matchroom Boxing",
+    "PPV_ENTITLEMENT_ID": "ppv_t_joshua_prenga",
+    "PPV_DESCRIPTION": "Catch the biggest moment of the year. Select a DAZN plan to pair with your pay-per-view.",
+    "PPV_UTC_DATE": "2026-07-25T13:00:00Z",
+    "PPV_LOCATION": "Jeddah, Saudi Arabia",
+    "BOXING_BANNER_SUBTITLE": "Danger before destiny. AJ returns to the ring against Prenga, an unknown entity with nothing to lose.",
+    "PPV_CARD_TITLE": "Joshua vs. Prenga",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free",
+    "BANNER_DESCRIPTION": "Danger before destiny. AJ returns to the ring against Prenga, an unknown entity with nothing to lose.",
+    "HOME_POPUP_DESCRIPTION": "Danger before destiny. AJ returns to the ring against Prenga, an unknown entity with nothing to lose."
+  },
+  "regions": {
+    "GB": {
+      "MOBILE_PPV_DATE": "25 JUL 2:00 PM",
+      "MOBILE_BANNER_TITLE": "Joshua vs. Prenga",
+      "MOBILE_BANNER_DATE_TIME": "Sat 25th Jul at 20:00",
+      "MOBILE_BANNER_DAY": "Sat",
+      "MOBILE_BANNER_DATE": "25th",
+      "MOBILE_BANNER_MONTH": "July",
+      "MOBILE_BANNER_TIME": "8:00pm",
+      "MOBILE_BANNER_DESCRIPTION": "Danger before destiny. AJ returns to the ring against Prenga, an unknown entity with nothing to lose.",
+      "MOBILE_SEARCH_PPV_DATE": "Sat 25th July at 2:00 PM",
+      "MOBILE_SCHEDULE_DAY": "SAT",
+      "MOBILE_SCHEDULE_MONTH": "JUL",
+      "MOBILE_SCHEDULE_DATE": "25",
+      "MOBILE_SCHEDULE_TIME": "2:00PM",
+      "PPV_NAME": "Joshua vs. Prenga"
+    },
+    "IE": {
+      "MOBILE_PPV_DATE": "25 JUL 2:00 PM",
+      "MOBILE_BANNER_TITLE": "Joshua vs. Prenga",
+      "MOBILE_BANNER_DATE_TIME": "Sat 25th Jul at 20:00",
+      "MOBILE_BANNER_DAY": "Sat",
+      "MOBILE_BANNER_DATE": "25th",
+      "MOBILE_BANNER_MONTH": "July",
+      "MOBILE_BANNER_TIME": "8:00pm",
+      "MOBILE_BANNER_DESCRIPTION": "Danger before destiny. AJ returns to the ring against Prenga, an unknown entity with nothing to lose.",
+      "MOBILE_SEARCH_PPV_DATE": "Sat 25th July at 2:00 PM",
+      "MOBILE_SCHEDULE_DAY": "SAT",
+      "MOBILE_SCHEDULE_MONTH": "JUL",
+      "MOBILE_SCHEDULE_DATE": "25",
+      "MOBILE_SCHEDULE_TIME": "2:00PM",
+      "PPV_NAME": "Joshua vs. Prenga"
+    }
+  }
+}

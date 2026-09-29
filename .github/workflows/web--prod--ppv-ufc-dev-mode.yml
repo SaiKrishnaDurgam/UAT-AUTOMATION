@@ -1,0 +1,91 @@
+name: "Web · Prod · UFC PPV enabled · Dev mode · Canada"
+run-name: "Web · Prod · UFC PPV enabled · Dev mode · CA · ${{ inputs.PPV_CONFIG }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      PPV_CONFIG:
+        description: "UFC PPV JSON filename (for example: ppv_t_ufc_330.json)"
+        required: true
+        type: string
+      PPV_DEV_MODE:
+        description: "Enable PPV_DEV_MODE validation"
+        required: true
+        type: choice
+        default: "true"
+        options: ["true", "false"]
+permissions:
+  contents: read
+  actions: write
+env:
+  PPV_DEV_MODE: ${{ inputs.PPV_DEV_MODE }}
+  JIRA_REGION: CA
+  JIRA_REGION_FIELD_NAME: Region
+  JIRA_DAZN_ENVIRONMENT_FIELD_NAME: DAZN Environment
+  JIRA_PLATFORM_FIELD_NAME: Platform - required
+  JIRA_DAZN_ENVIRONMENT: Live Prod
+  JIRA_PLATFORM: Desktop Web
+  JIRA_BASE_URL: https://livesport.atlassian.net
+  JIRA_PROJECT_KEY: QAR
+  JIRA_ISSUE_TYPE: Bug
+  JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+  JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+jobs:
+  prepare:
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 30
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v5
+      - id: matrix
+        run: node scripts/buildPpvWorkflowMatrix.js dev-account '${{ inputs.PPV_CONFIG }}' 'CA'
+  my-account:
+    needs: prepare
+    environment: prod
+    name: Existing user · Dev mode My Account | ${{ matrix.profile }}
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+      CI: 'true'
+      HEADLESS: 'true'
+      DAZN_ENV: prod
+      DAZN_REGION: CA
+      PPV_CONFIG: ${{ inputs.PPV_CONFIG }}
+      SOURCE: ${{ matrix.source }}
+      PROFILE: ${{ matrix.profile }}
+      LOGIN_FIRST: 'true'
+      DEV_MODE_ON: 'on'
+      SWITCH: 'false'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/ppv-generic-runner
+        with: { journey: dev-mode-my-account }
+  workflow-summary:
+    needs: [prepare, my-account]
+    if: ${{ always() }}
+    name: Consolidated workflow report · CA
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 30
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/ppv-workflow-summary
+        with:
+          title: Web UFC PPV dev-mode workflow report · CA
+          ppv_config: ${{ inputs.PPV_CONFIG }}
+          country: CA
+          artifact_pattern: ppv-web-*-attempt-${{ github.run_attempt }}
+          artifact_name: ppv-web-CA-ufc-devmode-workflow-summary-${{ github.run_attempt }}
+          new_user_status: not applicable
+          sign_in_status: not applicable
+          signed_in_status: ${{ needs.my-account.result }}

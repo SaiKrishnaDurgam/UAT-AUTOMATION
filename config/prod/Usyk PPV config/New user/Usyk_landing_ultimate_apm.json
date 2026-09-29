@@ -1,0 +1,75 @@
+{
+  "PPV_NAME": "Glory in Giza: Usyk vs. Rico",
+  "SECONDARY_PPV": "Wardley vs. Dubois",
+  "SPORT": "Boxing",
+  "flow": "landing",
+  "TIER": "ultimate",
+  "RATE_PLAN": "annual pay monthly",
+  "global": {
+    "PPV_DATE": "Sat 23rd May at 23:30",
+    "SECONDARY_PPV_DATE": "Sat 9th May at 23:30",
+    "PPV_TIME": "23:30",
+    "PPV_PROMOTER": "Queensberry Promotions",
+    "PPV_DESCRIPTION": "Catch the biggest moment of the year. Select a DAZN plan to pair with your pay-per-view.",
+    "ANNUAL_MONTHS": "11",
+    "SECONDARY_PPV": "Wardley vs. Dubois"
+  },
+  "regions": {
+    "AE": {
+      "BASE_URL": "https://www.dazn.com/en-AE",
+      "CURRENCY": "AED",
+      "DAZN_TIER": "DAZN Ultimate",
+      "PPV_PRICE": "AED 79.99",
+      "UPSELL_PRICE": "AED 72.99",
+      "MONTHLY_PRICE": "54.99",
+      "ANNUAL_PRICE": "72.99",
+      "ANNUAL_TOTAL": "",
+      "ANNUAL_PAY_MONTHLY_PRICE": "AED 72.99",
+      "ANNUAL_UPFRONT_PRICE": "734.99",
+      "UPFRONT_SAVE_AMOUNT": "140.89",
+      "NEXT_PAYMENT_PRICE": "AED 72.99",
+      "BUNDLE_PRICE": "",
+      "BUNDLE_ORIGINAL_PRICE": "",
+      "PPV_CTA_TEXT": "Continue",
+      "PLAN_CTA_BUTTON": "Continue with DAZN Ultimate",
+      "PLAN_PAGE_TITLE": "Choose a plan that's right for you",
+      "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "12 month contract",
+      "ULTIMATE_FEATURE_2": "Highlights from LALIGA, Bundesliga and Saudi Pro League.",
+      "ULTIMATE_FEATURE_3": "HDR and Dolby 5.1 surround sound on select events.",
+      "UPSELL_FEATURE_1": "Pay-per-views included at no extra cost. Minimum of 12 events per year including Wardley vs. Dubois.",
+      "TODAY_YOU_PAY_PRICE": "AED 72.99",
+      "CANCELLATION_TEXT": "Your Annual (pay over time) plan will renew automatically on 22/04/2027. You can cancel this auto-renewal in My Account.",
+      "UPSELL_HIGHLIGHT_TEXT": "Wardley vs. Dubois.",
+      "ULTIMATE_FEATURE_1": "Pay-per-views included at no extra cost. Minimum of 12 events per year including Chisora vs. Wilder & Wardley vs. Dubois.",
+      "ULTIMATE_FEATURE_1_HIGHLIGHT": "Wardley vs. Dubois",
+      "SECONDARY_PPV": "Wardley vs. Dubois"
+    }
+  },
+  "NEXT_PAYMENT_DAYS_OFFSET": 30,
+  "variants": {
+    "variant1": {
+      "detection": "subscribe without a pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "subscribe without a pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  },
+  "PPV_CTA_TEXT": "Continue",
+  "PLAN_PAGE_TITLE": "Choose a plan that's right for you",
+  "PLAN_CTA_BUTTON": "Continue with DAZN Ultimate",
+  "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "12 month contract",
+  "ULTIMATE_FEATURE_2": "Highlights from LALIGA, Bundesliga and Saudi Pro League.",
+  "ULTIMATE_FEATURE_3": "HDR and Dolby 5.1 surround sound on select events."
+}

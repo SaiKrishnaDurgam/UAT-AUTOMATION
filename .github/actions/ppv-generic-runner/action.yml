@@ -1,0 +1,97 @@
+name: Run generic PPV journey
+description: Runs a generic PPV Playwright journey.
+inputs:
+  journey:
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Clean stale local reports
+      shell: bash
+      run: rm -rf test-results playwright-report reports
+    - shell: bash
+      run: npm ci --prefer-offline --no-audit
+    - shell: bash
+      run: npx playwright install chromium
+    - if: ${{ env.PROFILE != '' }}
+      shell: bash
+      run: |
+        IFS='/' read -r state plan <<< "$PROFILE"
+        echo "USER_STATE=$state" >> "$GITHUB_ENV"
+        # For Canada (CA) region, translate old plan shorthand to Canada UFT format
+        if [ "$DAZN_REGION" = "CA" ]; then
+          case "$plan" in
+            standard_apm)       plan="standard-dazn+-annual-pay over time" ;;
+            standard_monthly)   plan="standard-dazn+-monthly" ;;
+            ultimate_apm)       plan="ultimate-dazn_ultimate-annual-pay over time" ;;
+            ultimate_upfront)   plan="ultimate-dazn_ultimate-annual-pay now" ;;
+          esac
+        fi
+        echo "PLAN=$plan" >> "$GITHUB_ENV"
+    - shell: bash
+      run: |
+        if [ "${{ inputs.journey }}" = "new-user" ]; then
+          npx playwright test tests/new_user/newuser.ppv.spec.ts --project=chromium --timeout=600000
+        else
+          npx playwright test tests/existing_user/existinguser.ppv.spec.ts --project=chromium --timeout=600000
+        fi
+    - name: Store Playwright reports locally
+      id: store-report
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        journey="${{ inputs.journey }}"
+        report_id="${SOURCE}-${PROFILE:-$PLAN}"
+        report_id="$(echo "$report_id" | tr '/ :|*?<>"' '_' | tr -cd '[:alnum:]_.-')"
+        # The same source/profile can run in more than one journey. Include the
+        # journey so reports cannot overwrite each other and the consolidated
+        # report can place them in the correct matrix lane.
+        # Attempt-specific names keep rerun artifacts isolated. The workflow
+        # summary downloads only this attempt, so an old failure cannot leak
+        # into a later successful rerun.
+        report_name="ppv-web-${journey}-${report_id}-attempt-${GITHUB_RUN_ATTEMPT}"
+        reports_root="${PPV_REPORTS_ROOT:-/tmp/ppv-reports}"
+        report_dir="${reports_root}/${GITHUB_RUN_ID}/attempt-${GITHUB_RUN_ATTEMPT}/${report_name}"
+        rm -rf "$report_dir"
+        mkdir -p "$report_dir"
+        echo "REPORT_NAME=$report_name" >> "$GITHUB_ENV"
+        echo "report_name=$report_name" >> "$GITHUB_OUTPUT"
+        found=false
+        for source_dir in test-results playwright-report reports; do
+          if [ -e "$source_dir" ]; then
+            if cp -R "$source_dir" "$report_dir/"; then
+              found=true
+            else
+              echo "::warning::Could not fully copy $source_dir for $report_name; uploading the available report files."
+            fi
+          fi
+        done
+        if [ "$found" = false ]; then
+          echo "No Playwright report folders found for $report_name"
+        fi
+        echo "Stored Playwright reports locally at $report_dir"
+    - name: Remove trace blobs before artifact upload
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        # Remove Playwright trace data bundles (large, not needed in GitHub artifact)
+        rm -rf playwright-report/data 2>/dev/null || true
+        # Remove raw trace zips from test-results
+        find test-results -name "trace.zip" -delete 2>/dev/null || true
+    - name: Upload job report as GitHub artifact
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.store-report.outputs.report_name }}
+        path: |
+          test-results/
+          playwright-report/
+          reports/
+        if-no-files-found: ignore
+        retention-days: 1
+        compression-level: 6
+    - name: Clean local reports after storing
+      if: ${{ always() }}
+      shell: bash
+      run: rm -rf test-results playwright-report reports

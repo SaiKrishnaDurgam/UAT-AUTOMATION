@@ -1,0 +1,175 @@
+name: iOS · Prod · PPV live
+run-name: "iOS · Prod · PPV live · ${{ inputs.COUNTRY }} · ${{ inputs.PPV_CONFIG }}"
+
+concurrency:
+  group: ios-physical-device-lock
+  cancel-in-progress: false
+
+
+on:
+  workflow_dispatch:
+    inputs:
+      PPV_CONFIG:
+        description: PPV JSON filename from config/events
+        required: true
+        type: string
+      COUNTRY:
+        description: Country
+        required: true
+        type: choice
+        default: GB
+        options: [GB, IE, US, AU, BR, AE, SA, "NO"]
+      BANNERS_CONFIGURED:
+        description: "Banners Configured/Available"
+        required: true
+        type: choice
+        default: "all"
+        options: ["all", "true", "false"]
+      POPUPS_CONFIGURED:
+        description: "Home Page Popup Configured/Available"
+        required: true
+        type: choice
+        default: "all"
+        options: ["all", "true", "false"]
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  prepare:
+    name: Validate PPV and build matrix
+    runs-on: [self-hosted, macOS, ARM64, gopi-runners]
+    timeout-minutes: 10
+    outputs:
+      new_matrix: ${{ steps.matrix.outputs.new_matrix }}
+      signin_matrix: ${{ steps.matrix.outputs.signin_matrix }}
+      signed_matrix: ${{ steps.matrix.outputs.signed_matrix }}
+    steps:
+      - uses: actions/checkout@v5
+      - id: matrix
+        shell: bash
+        env:
+          BANNERS_CONFIGURED: ${{ inputs.BANNERS_CONFIGURED }}
+          POPUPS_CONFIGURED: ${{ inputs.POPUPS_CONFIGURED }}
+        run: |
+          set -euo pipefail
+          for mode in ios-full-new ios-full-signin ios-full-signed; do
+            output_file="$(mktemp)"
+            GITHUB_OUTPUT="$output_file" node scripts/buildPpvWorkflowMatrix.js "$mode" '${{ inputs.PPV_CONFIG }}' '${{ inputs.COUNTRY }}'
+            case "$mode" in
+              ios-full-new) key=new_matrix ;;
+              ios-full-signin) key=signin_matrix ;;
+              ios-full-signed) key=signed_matrix ;;
+            esac
+            sed "s/^matrix=/$key=/" "$output_file" >> "$GITHUB_OUTPUT"
+            rm "$output_file"
+          done
+
+  new-user:
+    needs: prepare
+    name: New user | ${{ matrix.source }} | ${{ matrix.plan }}
+    runs-on: [self-hosted, macOS, ARM64, gopi-runners]
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.new_matrix) }}
+    env:
+      CI: 'true'
+      DAZN_ENV: prod
+      DAZN_REGION: ${{ inputs.COUNTRY }}
+      PPV_CONFIG: ${{ inputs.PPV_CONFIG }}
+      SOURCE: ${{ matrix.source }}
+      PLAN: ${{ matrix.plan }}
+      IOS_UDID: ${{ matrix.iosUdid }}
+      IOS_PLATFORM_VER: ${{ matrix.iosPlatformVersion }}
+      APPIUM_PORT: ${{ matrix.appiumPort }}
+      IOS_WDA_URL: ${{ matrix.wdaUrl }}
+      IOS_MJPEG_PORT: ${{ matrix.mjpegServerPort }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/ios-ppv-runner
+        with:
+          journey: new-user
+
+  existing-sign-in-during-flow:
+    needs: [prepare, new-user]
+    if: ${{ !cancelled() && needs.prepare.result == 'success' }}
+    name: Existing user · Sign in during flow | ${{ matrix.source }} | ${{ matrix.profile }}
+    runs-on: [self-hosted, macOS, ARM64, gopi-runners]
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.signin_matrix) }}
+    env:
+      CI: 'true'
+      DAZN_ENV: prod
+      DAZN_REGION: ${{ inputs.COUNTRY }}
+      PPV_CONFIG: ${{ inputs.PPV_CONFIG }}
+      SOURCE: ${{ matrix.source }}
+      PROFILE: ${{ matrix.profile }}
+      LOGIN_FIRST: 'false'
+      IOS_UDID: ${{ matrix.iosUdid }}
+      IOS_PLATFORM_VER: ${{ matrix.iosPlatformVersion }}
+      APPIUM_PORT: ${{ matrix.appiumPort }}
+      IOS_WDA_URL: ${{ matrix.wdaUrl }}
+      IOS_MJPEG_PORT: ${{ matrix.mjpegServerPort }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/ios-ppv-runner
+        with:
+          journey: sign-in-during-flow
+
+  existing-already-signed-in:
+    needs: [prepare, existing-sign-in-during-flow]
+    if: ${{ !cancelled() && needs.prepare.result == 'success' }}
+    name: Existing user · Already signed in | ${{ matrix.source }} | ${{ matrix.profile }}
+    runs-on: [self-hosted, macOS, ARM64, gopi-runners]
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.signed_matrix) }}
+    env:
+      CI: 'true'
+      DAZN_ENV: prod
+      DAZN_REGION: ${{ inputs.COUNTRY }}
+      PPV_CONFIG: ${{ inputs.PPV_CONFIG }}
+      SOURCE: ${{ matrix.source }}
+      PROFILE: ${{ matrix.profile }}
+      LOGIN_FIRST: 'true'
+      IOS_UDID: ${{ matrix.iosUdid }}
+      IOS_PLATFORM_VER: ${{ matrix.iosPlatformVersion }}
+      APPIUM_PORT: ${{ matrix.appiumPort }}
+      IOS_WDA_URL: ${{ matrix.wdaUrl }}
+      IOS_MJPEG_PORT: ${{ matrix.mjpegServerPort }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/ios-ppv-runner
+        with:
+          journey: already-signed-in
+  workflow-summary:
+    needs: [prepare, new-user, existing-sign-in-during-flow, existing-already-signed-in]
+    if: ${{ always() }}
+    name: Consolidated workflow report · ${{ inputs.COUNTRY }}
+    runs-on: [self-hosted, macOS, ARM64, gopi-runners]
+    timeout-minutes: 10
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/ppv-workflow-summary
+        with:
+          title: iOS PPV live workflow report · ${{ inputs.COUNTRY }}
+          ppv_config: ${{ inputs.PPV_CONFIG }}
+          country: ${{ inputs.COUNTRY }}
+          artifact_pattern: ppv-ios-*-attempt-${{ github.run_attempt }}
+          artifact_name: ppv-ios-${{ inputs.COUNTRY }}-workflow-summary-${{ github.run_attempt }}
+          new_user_status: ${{ needs.new-user.result }}
+          sign_in_status: ${{ needs.existing-sign-in-during-flow.result }}
+          signed_in_status: ${{ needs.existing-already-signed-in.result }}

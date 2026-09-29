@@ -1,0 +1,125 @@
+{
+  "flow": "myaccount",
+  "TIER": "freemium",
+  "RATE_PLAN": "monthly",
+  "PURCHASE_OPTION": "ppv",
+  "FLOW_FROM_POPUP": false,
+  "SUBSCRIPTION_STATUS": "Resubscribe",
+  "PPV_STATUS": "Buy now",
+  "NEXT_PAYMENT_DAYS_OFFSET": 7,
+  "regions": {
+    "UK": {
+      "BASE_URL": "https://www.dazn.com/en-GB",
+      "DAZN_TIER": "DAZN Free",
+      "USER_EMAIL": "uk_ppvb1@t.com",
+      "USER_PASSWORD": "Test1!",
+      "PPV_PRICE": "£24.99",
+      "UPSELL_PRICE": "£24.99",
+      "MONTHLY_PRICE": "25.99",
+      "ANNUAL_PRICE": "15.99",
+      "ANNUAL_TOTAL": "",
+      "ANNUAL_PAY_MONTHLY_PRICE": "24.99",
+      "ANNUAL_UPFRONT_PRICE": "249.99",
+      "UPFRONT_SAVE_AMOUNT": "49.89",
+      "NEXT_PAYMENT_PRICE": "£25.99",
+      "BUNDLE_PRICE": "£49.99",
+      "BUNDLE_ORIGINAL_PRICE": "£59.98",
+      "UPSELL_PLAN_NAME": "Annual - Pay Monthly",
+      "FIRST_MONTH_FREE_TEXT": "+ one month free",
+      "PPV_CTA_TEXT": "Continue",
+      "UPSELL_FEATURE_1": "Pay-per-views included at no extra cost. Minimum of 12 events per year including {{PPV_NAME}}.",
+      "pages": {
+        "plan": {
+          "PAGE_TITLE": "Choose a plan that's right for you",
+          "CTA_BUTTON": "Continue with PPV + 7-day free trial"
+        }
+      },
+      "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "Annual contract. Auto renews",
+      "ULTIMATE_FEATURE_2": "HDR and Dolby 5.1 surround sound on select events.",
+      "ULTIMATE_FEATURE_3": "Every match from Lega Serie A, and highlights from LALIGA, Bundesliga and the Saudi Pro League.",
+      "TRIAL_MONTHLY_PRICE": "£25.99",
+      "CANCELLATION_TEXT": "Monthly subscription. Cancel with 30 days' notice. Your subscription auto-renews unless you cancel."
+    },
+    "US": {
+      "BASE_URL": "https://www.dazn.com/en-US",
+      "DAZN_TIER": "DAZN Free",
+      "USER_EMAIL": "us_returning@t.com",
+      "USER_PASSWORD": "Test1!",
+      "PPV_PRICE": "$79.99",
+      "UPSELL_PRICE": "$44.99",
+      "MONTHLY_PRICE": "31.99",
+      "ANNUAL_PRICE": "16.99",
+      "ANNUAL_TOTAL": "",
+      "ANNUAL_PAY_MONTHLY_PRICE": "44.99",
+      "ANNUAL_UPFRONT_PRICE": "449.99",
+      "UPFRONT_SAVE_AMOUNT": "89.89",
+      "NEXT_PAYMENT_PRICE": "$44.99",
+      "BUNDLE_PRICE": "$79.99",
+      "BUNDLE_ORIGINAL_PRICE": "$99.98",
+      "UPSELL_PLAN_NAME": "Annual - Pay Monthly",
+      "FIRST_MONTH_FREE_TEXT": "+ First month free",
+      "PPV_CTA_TEXT": "Continue",
+      "UPSELL_FEATURE_1": "Pay-per-views included at no extra cost. Minimum of 12 events per year including {{PPV_NAME}}.",
+      "pages": {
+        "plan": {
+          "PAGE_TITLE": "Choose a plan that's right for you",
+          "CTA_BUTTON": "Continue with DAZN Ultimate"
+        }
+      }
+    },
+    "AU": {
+      "BASE_URL": "https://www.dazn.com/en-AU",
+      "DAZN_TIER": "DAZN Free",
+      "USER_EMAIL": "au_returning@t.com",
+      "USER_PASSWORD": "Test1!",
+      "PPV_PRICE": "$49.99",
+      "UPSELL_PRICE": "$16.99",
+      "MONTHLY_PRICE": "31.99",
+      "ANNUAL_PRICE": "16.99",
+      "ANNUAL_TOTAL": "",
+      "ANNUAL_PAY_MONTHLY_PRICE": "",
+      "ANNUAL_UPFRONT_PRICE": "",
+      "UPFRONT_SAVE_AMOUNT": "",
+      "NEXT_PAYMENT_PRICE": "$16.99",
+      "BUNDLE_PRICE": "$79.99",
+      "BUNDLE_ORIGINAL_PRICE": "$99.98",
+      "UPSELL_PLAN_NAME": "Annual - pay over time",
+      "FIRST_MONTH_FREE_TEXT": "+ First month free",
+      "PPV_CTA_TEXT": "Continue",
+      "UPSELL_FEATURE_1": "Pay-per-views included at no extra cost. Minimum of 12 events per year including {{PPV_NAME}}.",
+      "pages": {
+        "plan": {
+          "PAGE_TITLE": "Choose a plan that's right for you",
+          "CTA_BUTTON": "Continue with DAZN Ultimate"
+        }
+      }
+    },
+    "IN": {
+      "BASE_URL": "https://www.dazn.com/en-IN",
+      "DAZN_TIER": "DAZN Free",
+      "USER_EMAIL": "in_returning@t.com",
+      "USER_PASSWORD": "Test1!",
+      "PPV_PRICE": "₹1,953",
+      "UPSELL_PRICE": "₹1,775",
+      "MONTHLY_PRICE": "799",
+      "ANNUAL_PRICE": "409",
+      "ANNUAL_TOTAL": "4,499",
+      "ANNUAL_PAY_MONTHLY_PRICE": "1,775",
+      "ANNUAL_UPFRONT_PRICE": "17,800",
+      "UPFRONT_SAVE_AMOUNT": "3,500",
+      "NEXT_PAYMENT_PRICE": "₹799",
+      "BUNDLE_PRICE": "₹2,999",
+      "BUNDLE_ORIGINAL_PRICE": "₹3,906",
+      "UPSELL_PLAN_NAME": "Annual - pay over time",
+      "FIRST_MONTH_FREE_TEXT": "+ First month free",
+      "PPV_CTA_TEXT": "Continue",
+      "UPSELL_FEATURE_1": "Pay-per-views included at no extra cost. Minimum of 12 events per year including {{PPV_NAME}}.",
+      "pages": {
+        "plan": {
+          "PAGE_TITLE": "Choose a plan that's right for you",
+          "CTA_BUTTON": "Continue with DAZN Ultimate"
+        }
+      }
+    }
+  }
+}

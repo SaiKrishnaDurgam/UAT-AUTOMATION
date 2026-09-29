@@ -1,0 +1,70 @@
+{
+  "eventKey": "ufc_331",
+  "PPV_NAME": "UFC 331 Van vs Pantoja 2",
+  "PPV_DISPLAY_NAME": "UFC 331 Van vs Pantoja 2",
+  "SPORT": "MMA",
+  "PPV_TYPE": "normal",
+  "HAS_BUNDLE": false,
+  "PPV_DEV_MODE": false,
+  "DEFAULT_SIGNUP_DEVMODE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": false,
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "UFC",
+    "PPV_ENTITLEMENT_ID": "ppv_t_ufc_331",
+    "PPV_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "PPV_UTC_DATE": "2026-09-20T01:00:00Z",
+    "PPV_LOCATION": "Crypto.com Arena, Los Angeles, California, USA",
+    "BOXING_BANNER_DATE": "SUN 20TH SEP",
+    "BOXING_BANNER_SUBTITLE": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "BOXING_UPCOMING_DATE": "SEP 20",
+    "LANDING_DONT_MISS_DATE": "SEP 20",
+    "PPV_CARD_TITLE": "UFC 331: Van vs Pantoja 2",
+    "PPV_CARD_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "BANNER_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja.",
+    "HOME_POPUP_DESCRIPTION": "Van defends his flyweight title in a highly anticipated rematch with Pantoja."
+  },
+  "regions": {
+    "CA": {
+      "OFFER_TYPE": "none",
+      "LANDING_PAGE_PPV_DATE": "19 Sep",
+      "PPV_DATE": "Sat 19th Sep at 9:00 p.m.",
+      "PPV_PAGE_DATE": "Sat 19th Sep at 9:00 p.m.",
+      "PPV_TIME": "9:00 p.m.",
+      "BOXING_BANNER_DATE": "SAT 19TH SEP",
+      "LANDING_BANNER_DATE": "SAT 19TH SEP AT 9:00 P.M.",
+      "HOME_POPUP_DATE": "SAT 19TH SEP AT 9:00 P.M.",
+      "PPV_POPUP_DATE": "19 SEP 9:00PM",
+      "SEARCH_PPV_DATE_TIME": "19 SEP 9:00PM",
+      "SCHEDULE_PPV_TIME": "9:00PM",
+      "HOME_BOXING_UPCOMING_TIME": "9:00PM",
+      "PPV_PRICE": "$69.99",
+      "TODAY_YOU_PAY_PRICE": "$69.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

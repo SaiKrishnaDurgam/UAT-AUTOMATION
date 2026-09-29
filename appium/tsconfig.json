@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": [
+      "ES2021",
+      "dom"
+    ],
+    "strict": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+    "types": [
+      "node",
+      "mocha",
+      "@wdio/globals"
+    ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests/ios/schedule.spec.ts",
+    "pages/ios/IOSValidationPage.ts"
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "eventKey": "garcia_benn",
+  "PPV_NAME": "Garcia vs. Benn",
+  "PPV_DISPLAY_NAME": "Garcia vs. Benn",
+  "SPORT": "Boxing",
+  "PPV_TYPE": "normal",
+  "HAS_BUNDLE": false,
+  "PPV_DEV_MODE": false,
+  "DEFAULT_SIGNUP_DEVMODE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": true,
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "Ring Magazine",
+    "PPV_ENTITLEMENT_ID": "ppv_t_garcia_benn",
+    "PPV_DESCRIPTION": "Two of boxing's biggest personalities in a must-see clash as King Ry puts his WBC world title on the line in Las Vegas",
+    "PPV_UTC_DATE": "2026-09-13T00:00:00Z",
+    "PPV_LOCATION": "T-Mobile Arena, Las Vegas",
+    "BOXING_BANNER_DATE": "SAT 12TH SEP",
+    "BOXING_BANNER_SUBTITLE": "Two of boxing's biggest personalities in a must-see clash as King Ry puts his WBC world title on the line in Las Vegas",
+    "BOXING_UPCOMING_DATE": "12 Sep",
+    "LANDING_DONT_MISS_DATE": "SEP 12",
+    "PPV_CARD_TITLE": "Garcia vs. Benn",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "BANNER_DESCRIPTION": "Two of boxing's biggest personalities in a must-see clash as King Ry puts his WBC world title on the line in Las Vegas",
+    "HOME_POPUP_DESCRIPTION": "Two of boxing's biggest personalities in a must-see clash as King Ry puts his WBC world title on the line in Las Vegas"
+  },
+  "regions": {
+    "GB": {
+      "LANDING_PAGE_PPV_DATE": "12 Sep",
+      "PPV_DATE": "Sun 13th Sep at 01:00",
+      "PPV_PAGE_DATE": "Sun 13th Sep at 01:00",
+      "PPV_TIME": "01:00",
+      "BOXING_BANNER_DATE": "SAT 12TH SEP",
+      "BOXING_UPCOMING_DATE": "12 Sep",
+      "LANDING_BANNER_DATE": "SUN 13TH SEP AT 01:00",
+      "HOME_POPUP_DATE": "SUN 13TH SEP AT 01:00",
+      "PPV_POPUP_DATE": "13 SEP 1:00AM",
+      "SEARCH_PPV_DATE_TIME": "13 SEP 1:00AM",
+      "SCHEDULE_PPV_TIME": "1:00AM",
+      "HOME_BOXING_UPCOMING_TIME": "1:00AM",
+      "PPV_PRICE": "£24.99",
+      "TODAY_YOU_PAY_PRICE": "£24.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "IE": {
+      "LANDING_PAGE_PPV_DATE": "12 Sep",
+      "PPV_DATE": "Sun 13th Sep at 01:00",
+      "PPV_PAGE_DATE": "Sun 13th Sep at 01:00",
+      "PPV_TIME": "01:00",
+      "BOXING_BANNER_DATE": "SAT 12TH SEP",
+      "BOXING_UPCOMING_DATE": "12 Sep",
+      "LANDING_BANNER_DATE": "SUN 13TH SEP AT 01:00",
+      "HOME_POPUP_DATE": "SUN 13TH SEP AT 01:00",
+      "PPV_POPUP_DATE": "13 SEP 1:00AM",
+      "SEARCH_PPV_DATE_TIME": "13 SEP 1:00AM",
+      "SCHEDULE_PPV_TIME": "1:00AM",
+      "HOME_BOXING_UPCOMING_TIME": "1:00AM",
+      "PPV_PRICE": "€24.99",
+      "TODAY_YOU_PAY_PRICE": "€24.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AE": {
+      "LANDING_PAGE_PPV_DATE": "13 Sep",
+      "PPV_DATE": "Sun 13th Sep at 04:00",
+      "PPV_PAGE_DATE": "Sun 13th Sep at 04:00",
+      "PPV_TIME": "04:00",
+      "BOXING_BANNER_DATE": "SUN 13TH SEP",
+      "BOXING_UPCOMING_DATE": "13 Sep",
+      "LANDING_BANNER_DATE": "SUN 13TH SEP AT 04:00",
+      "HOME_POPUP_DATE": "SUN 13TH SEP AT 04:00",
+      "PPV_POPUP_DATE": "13 SEP 4:00AM",
+      "SEARCH_PPV_DATE_TIME": "13 SEP 4:00AM",
+      "SCHEDULE_PPV_TIME": "4:00AM",
+      "HOME_BOXING_UPCOMING_TIME": "4:00AM",
+      "PPV_PRICE": "AED 49.00",
+      "TODAY_YOU_PAY_PRICE": "AED 49.00",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "NO": {
+      "LANDING_PAGE_PPV_DATE": "13 Sep",
+      "PPV_DATE": "Sun 13th Sep at 02:00",
+      "PPV_PAGE_DATE": "Sun 13th Sep at 02:00",
+      "PPV_TIME": "02:00",
+      "BOXING_BANNER_DATE": "SUN 13TH SEP",
+      "BOXING_UPCOMING_DATE": "13 Sep",
+      "LANDING_BANNER_DATE": "SUN 13TH SEP AT 02:00",
+      "HOME_POPUP_DATE": "SUN 13TH SEP AT 02:00",
+      "PPV_POPUP_DATE": "13 SEP 2:00AM",
+      "SEARCH_PPV_DATE_TIME": "13 SEP 2:00AM",
+      "SCHEDULE_PPV_TIME": "2:00AM",
+      "HOME_BOXING_UPCOMING_TIME": "2:00AM",
+      "PPV_PRICE": "129,99 kr",
+      "TODAY_YOU_PAY_PRICE": "129,99 kr",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

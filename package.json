@@ -1,0 +1,33 @@
+{
+  "name": "dazn-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "playwright test",
+    "test:setup": "playwright test --grep @setup",
+    "test:report": "playwright show-report",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "android": "npm --prefix appium run android",
+    "tv:ppv:e2e": "bash run_tv_ppv_handoff.sh",
+    "demo": "ts-node scripts/demo.ts"
+  },
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.70",
+    "@playwright/test": "^1.49.0",
+    "@types/dotenv": "^6.1.1",
+    "@wdio/cli": "^9.29.1",
+    "jimp": "^1.6.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "exceljs": "^4.4.0",
+    "fs-extra": "^11.3.4",
+    "playwright-mcp": "^0.0.19",
+    "xlsx": "^0.18.5"
+  },
+  "overrides": {
+    "happy-dom": "^20.8.9"
+  }
+}

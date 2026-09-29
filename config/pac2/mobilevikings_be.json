@@ -1,0 +1,32 @@
+{
+  "partnerName": "Mobile Vikings",
+  "region": "BE",
+  "locale": "en-BE",
+  "geolocation": {
+    "latitude": 50.8503,
+    "longitude": 4.3517
+  },
+  "expectedLandingCopy": [
+    "special offer",
+    "claim offer"
+  ],
+  "myAccountPartnerText": "Viking",
+  "users": {
+    "freemium": {
+      "email": "be_freemium_viking@yopmail.com",
+      "password": "Dazn@123"
+    },
+    "frozen": {
+      "email": "be_frozen_viking@yopmail.com",
+      "password": "Dazn@123"
+    },
+    "activePaid": {
+      "email": "be_pac1@yopmail.com",
+      "password": "Test1!"
+    },
+    "otherPartnerPac": {
+      "email": "be_otherpartner_viking@yopmail.com",
+      "password": "Dazn@123"
+    }
+  }
+}

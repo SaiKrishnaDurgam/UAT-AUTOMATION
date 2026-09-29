@@ -1,0 +1,578 @@
+{
+  "freemium": {
+    "SUBSCRIPTION_STATUS": "Upgrade now",
+    "PPV_STATUS": "Buy now",
+    "regions": {
+      "GB": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "stagupsellfree3@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          },
+          "prod": {
+            "USER_EMAIL": "uk1free@yopmail.com",
+            "USER_PASSWORD": "Dazn123"
+          }
+        }
+      },
+      "IE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "iefreemium@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "US": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "us_freemium@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "usfreeppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "AU": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "au_freemium@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "auppvprod3@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "AE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "in_freemium1@yopmail.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "aesignup@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "SA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "sappvauto@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "NO": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "nofreemium@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "CA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "sri001@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "BR": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "brppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      }
+    }
+  },
+  "frozen": {
+    "SUBSCRIPTION_STATUS": "Resubscribe",
+    "PPV_STATUS": "Buy now",
+    "regions": {
+      "GB": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "stagfrozenupsell2@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          },
+          "prod": {
+            "USER_EMAIL": "testuk0202@yopmail.com",
+            "USER_PASSWORD": "Test@1",
+            "FIRST_NAME": "Test",
+            "LAST_NAME": "Naini"
+          }
+        }
+      },
+      "IE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "nkiea@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "US": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "us_returning@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "2usa@m.com",
+            "USER_PASSWORD": "55555eE",
+            "FIRST_NAME": "df",
+            "LAST_NAME": "f"
+          }
+        }
+      },
+      "AU": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "au_returning@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "aupr.off1@yopmail.com",
+            "USER_PASSWORD": "12345t@T"
+          }
+        }
+      },
+      "AE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "in_returning@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "uae_ppv@yopmail.com",
+            "USER_PASSWORD": "Dlab@123"
+          }
+        }
+      },
+      "SA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "safrozenppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "NO": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "nofrozen@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "BR": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "brppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "CA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "uataccounts+pcapr02@dazn.com",
+            "USER_PASSWORD": "12345a"
+          }
+        }
+      }
+    }
+  },
+  "active_standard_monthly": {
+    "SUBSCRIPTION_STATUS": "Manage subscription",
+    "PPV_STATUS": "Buy now",
+    "regions": {
+      "GB": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_GB_STANDARD_MONTHLY_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "tarunukprod3@yopmail.com",
+            "USER_PASSWORD": "Test@123"
+          }
+        }
+      },
+      "IE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "sri001ie@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "US": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_US_STANDARD_MONTHLY_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "capeuat+pusa7@yopmail.com",
+            "USER_PASSWORD": "12345t"
+          }
+        }
+      },
+      "AU": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_AU_STANDARD_MONTHLY_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "auactivemon@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "IN": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IN_STANDARD_MONTHLY_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "TODO_ADD_IN_STANDARD_MONTHLY_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          }
+        }
+      },
+      "BR": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "brppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "SA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "samonthlyppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "AE": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "aeactivemon@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "NO": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "noactivemon@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "CA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "ca2505@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      }
+    }
+  },
+  "active_standard_apm": {
+    "SUBSCRIPTION_STATUS": "Manage subscription",
+    "PPV_STATUS": "Buy now",
+    "regions": {
+      "GB": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_GB_STANDARD_APM_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "uknewglory@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "IE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "sri001ie@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "US": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_US_STANDARD_APM_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "tarun_usprod3@yopmail.com",
+            "USER_PASSWORD": "Test@123"
+          }
+        }
+      },
+      "AU": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "au_standard_apm@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "au_standard_apm@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "IN": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "in_standard_apm@t.com",
+            "USER_PASSWORD": "Test1!"
+          },
+          "prod": {
+            "USER_EMAIL": "in_standard_apm@t.com",
+            "USER_PASSWORD": "Test1!"
+          }
+        }
+      },
+      "NO": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "noactiveapm@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "CA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "cadazn+@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      }
+    }
+  },
+  "active_ultimate_apm": {
+    "SUBSCRIPTION_STATUS": "Manage subscription",
+    "PPV_STATUS": "Purchased",
+    "regions": {
+      "GB": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "uk_ultimate_apm@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          },
+          "prod": {
+            "USER_EMAIL": "tarunukprod5@yopmail.com",
+            "USER_PASSWORD": "Test@123"
+          }
+        }
+      },
+      "IE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          }
+        }
+      },
+      "US": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_US_ULTIMATE_APM_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "ppvupsellusa@yopmail.com",
+            "USER_PASSWORD": "Test@123"
+          }
+        }
+      },
+      "BR": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "brppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "AU": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_AU_ULTIMATE_APM_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "auultimateapm1@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "SA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "saultimatemonthlyppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "NO": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "noultimateapm@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "AE": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "aeultimateapm@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "CA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "sri001@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      }
+    }
+  },
+  "active_ultimate_upfront": {
+    "SUBSCRIPTION_STATUS": "Manage subscription",
+    "PPV_STATUS": "Purchased",
+    "regions": {
+      "GB": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_GB_ULTIMATE_UPFRONT_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "Gbultimateupfront@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "IE": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_IE_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "ieksi2@testing.dazn.com",
+            "USER_PASSWORD": "55555eE"
+          }
+        }
+      },
+      "US": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_US_ULTIMATE_UPFRONT_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "usppvultimate@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "AU": {
+        "environments": {
+          "stag": {
+            "USER_EMAIL": "TODO_ADD_AU_ULTIMATE_UPFRONT_ACCOUNT",
+            "USER_PASSWORD": "TODO_ADD_PASSWORD"
+          },
+          "prod": {
+            "USER_EMAIL": "auultimateapm@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "SA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "saultimateupfrontppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "NO": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "noultimateupfront@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "AE": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "aeultimateupfront@yopmail.com",
+            "USER_PASSWORD": "Dazn@123"
+          }
+        }
+      },
+      "BR": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "brppv@yopmail.com",
+            "USER_PASSWORD": "Dazn@1"
+          }
+        }
+      },
+      "CA": {
+        "environments": {
+          "prod": {
+            "USER_EMAIL": "taruncaprod2@t.dazn.com",
+            "USER_PASSWORD": "Test@123"
+          }
+        }
+      }
+    }
+  }
+}

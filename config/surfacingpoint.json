@@ -1,0 +1,122 @@
+{
+  "home-page-get-started": {
+    "source": "home-page-get-started",
+    "endPage": "payment",
+    "defaultSignup": true
+  },
+  "home-page-dazntile": {
+    "source": "home-page-dazntile",
+    "endPage": "payment",
+    "defaultSignup": true
+  },
+  "home-page-subscribe": {
+    "source": "home-page-subscribe",
+    "endPage": "payment",
+    "defaultSignup": true
+  },
+  "landing-page-banner": {
+    "source": "landing-page-banner",
+    "endPage": "payment"
+  },
+  "landing-page-dont-miss-live": {
+    "source": "landing-page-dont-miss-live",
+    "endPage": "payment"
+  },
+  "landing-page-dont-miss-live-switch": {
+    "source": "landing-page-dont-miss-live",
+    "endPage": "payment",
+    "enableDevMode": true
+  },
+  "boxing-page-banner": {
+    "source": "boxing-page-banner",
+    "endPage": "payment"
+  },
+  "boxing-page-bundle": {
+    "source": "boxing-page-bundle",
+    "endPage": "payment"
+  },
+  "boxing-upcoming-fights": {
+    "source": "boxing-upcoming-fights",
+    "endPage": "payment"
+  },
+  "home-boxing-banner": {
+    "source": "home-boxing-banner",
+    "endPage": "payment"
+  },
+  "home-boxing-tile": {
+    "source": "home-boxing-tile",
+    "endPage": "payment"
+  },
+  "home-boxing-upcoming": {
+    "source": "home-boxing-upcoming",
+    "endPage": "payment"
+  },
+  "search": {
+    "source": "search",
+    "endPage": "payment"
+  },
+  "schedule": {
+    "source": "schedule",
+    "endPage": "payment"
+  },
+  "myaccount": {
+    "source": "myaccount",
+    "endPage": "payment"
+  },
+  "myaccount-subscription-status": {
+    "source": "myaccount-subscription-status",
+    "endPage": "payment",
+    "defaultSignup": true
+  },
+  "home-kickboxing-tile": {
+    "source": "home-kickboxing-tile",
+    "endPage": "payment"
+  },
+  "home-page-banner": {
+    "source": "home-page-banner",
+    "endPage": "payment"
+  },
+  "home-page-dont-miss": {
+    "source": "home-page-dont-miss",
+    "endPage": "payment"
+  },
+  "home-biggest-fights": {
+    "source": "home-biggest-fights",
+    "endPage": "payment"
+  },
+  "boxing-banner-ultimate": {
+    "source": "boxing-banner-ultimate",
+    "endPage": "payment"
+  },
+  "boxing-ultimate-subscription": {
+    "source": "boxing-ultimate-subscription",
+    "endPage": "payment"
+  },
+  "boxing-standard-subscription": {
+    "source": "boxing-standard-subscription",
+    "endPage": "payment",
+    "defaultSignup": true
+  },
+  "boxing-join-the-club": {
+    "source": "boxing-join-the-club",
+    "endPage": "payment"
+  },
+  "subscribe-without-pay-per-view": {
+    "source": "home-page-dazntile",
+    "endPage": "plan",
+    "defaultSignup": true,
+    "noPpvClick": true
+  },
+  "glory-tile": {
+    "source": "glory-tile",
+    "endPage": "payment"
+  },
+  "glory-banner": {
+    "source": "glory-banner",
+    "endPage": "payment"
+  },
+  "home-page-popup": {
+    "source": "home-page-popup",
+    "endPage": "payment"
+  }
+}

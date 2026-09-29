@@ -1,0 +1,83 @@
+{
+  "partnerName": "telefonica",
+  "campaignName": "DAZN x BA-BD",
+  "campaigns": [
+    {
+      "name": "DAZN x LL-BD-BA-BD",
+      "expectedPlanName": "LaLiga",
+      "expectedPaymentMethod": "Movistar Bill"
+    },
+    {
+      "name": "DAZN x LL-AC-BA-BD",
+      "expectedPlanName": "LaLiga",
+      "expectedPaymentMethod": "Movistar Bill"
+    },
+    {
+      "name": "DAZN x BA-BD",
+      "expectedPlanName": "Baloncesto",
+      "expectedPaymentMethod": "Movistar Bill"
+    }
+  ],
+  "brandName": "Movistar",
+  "region": "ES",
+  "locale": "en-ES",
+  "geolocation": {
+    "latitude": 40.4168,
+    "longitude": -3.7038
+  },
+  "expectedPlanName": "Baloncesto",
+  "expectedPaymentMethod": "Movistar Bill",
+  "expectedLandingCopy": [
+    "WELCOME TO DAZN",
+    "Movistar",
+    "CREATE DAZN ACCOUNT",
+    "SIGN IN"
+  ],
+  "expectedCopy": {
+    "welcomeModal": {
+      "header": "WELCOME TO DAZN",
+      "createAccountButton": "CREATE DAZN ACCOUNT",
+      "signInButton": "SIGN IN"
+    },
+    "confirmation": {
+      "header": "START YOUR SUBSCRIPTION",
+      "offerDescription": "Are you ready to explore DAZN sport content? Click here below to get started. Your access is included in the offer you subscribed with Movistar.",
+      "termsAndConditions": "By signing up I agree that my subscription starts immediately and that I have read and agreed to DAZN Terms of Use and Privacy Policy. The subscription continues automatically, following Movistar's subscribed offer. I can cancel at any time on a monthly basis through Movistar",
+      "termsOfUseLink": "Terms of Use",
+      "privacyPolicyLink": "Privacy Policy",
+      "ctaButton": "Start subscription"
+    },
+    "doubleBillingNotice": [
+      "cancel",
+      "double",
+      "billing"
+    ]
+  },
+  "myAccountPartnerText": "Movistar",
+  "users": {
+    "partial": {
+      "email": "es_partial_pac1@yopmail.com",
+      "password": "TestPassword1!"
+    },
+    "frozen": {
+      "email": "stag_es_pac1@yopmail.com",
+      "password": "Dazn@123"
+    },
+    "activePaid": {
+      "email": "es_activepaid_pac1@yopmail.com",
+      "password": "TestPassword1!"
+    },
+    "freemium": {
+      "email": "es_freemium_pac1@yopmail.com",
+      "password": "TestPassword1!"
+    },
+    "frozenAccounts": [
+      { "email": "stag_es_pac1@yopmail.com", "password": "Dazn@123", "plan": "futbol - standard apm" },
+      { "email": "stag_es_pac2@yopmail.com", "password": "Dazn@123", "plan": "premium - monthly" },
+      { "email": "stag_es_pac3@yopmail.com", "password": "Dazn@123", "plan": "Baloncesto - apm" },
+      { "email": "stag_es_pac4@yopmail.com", "password": "Dazn@123", "plan": "Motor monthly" },
+      { "email": "stag_es_pac5@yopmail.com", "password": "Dazn@123", "plan": "Baloncesto - annual pay now" },
+      { "email": "stag_es_pac6@yopmail.com", "password": "Dazn@123", "plan": "futbol monthly" }
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "eventKey": "zayas_boots",
+  "PPV_NAME": "Zayas vs. Boots",
+  "PPV_DISPLAY_NAME": "PPV: Zayas vs. Boots",
+  "SPORT": "Boxing",
+  "PPV_TYPE": "normal",
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "DAZN Boxing",
+    "PPV_DESCRIPTION": "Catch the biggest moment of the year. Select a DAZN plan to pair with your pay-per-view.",
+    "PPV_UTC_DATE": "2026-06-27T22:15:00Z",
+    "PPV_LOCATION": "Barclays Center, Brooklyn",
+    "PPV_DATE": "Sun 28th Jun at 3:45 AM",
+    "PPV_TIME": "3:45 AM",
+    "PPV_CARD_TITLE": "PPV: Zayas vs. Boots",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "BOXING_BANNER_SUBTITLE": "Main Event Barclays Centre, Brooklyn 3:45 AM.",
+    "BANNER_DESCRIPTION": "The future of boxing collides in Brooklyn: the youngest unified champion at 154 takes on the IBF welterweight king",
+    "EVENT_START_UTC": "2026-06-27T22:15:00Z",
+    "WELCOME_BANNER_DATE_TIME": "Sunday at 3:45 AM",
+    "WELCOME_TILE_DATE": "June 27",
+    "PLAN_PAGE_PPV_DATE_TIME": "Sunday at 3:45 AM",
+    "PPV_PAGE_DATE_TIME": "Sunday at 3:45 AM",
+    "LANDING_PAGE_PPV_DATE": "27 June"
+  },
+  "regions": {
+    "GB": {
+      "LANDING_PAGE_PPV_DATE": "27 June",
+      "PPV_PRICE": "\u00a324.99",
+      "TODAY_YOU_PAY_PRICE": "\u00a324.99",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "US": {
+      "LANDING_PAGE_PPV_DATE": "27 June",
+      "PPV_PRICE": "$74.99",
+      "TODAY_YOU_PAY_PRICE": "$74.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AU": {
+      "LANDING_PAGE_PPV_DATE": "28 June",
+      "PPV_PRICE": "$49.99",
+      "TODAY_YOU_PAY_PRICE": "$49.99",
+      "UPSELL_PRICE": "$39.99",
+      "UPSELL_CROSSED_PRICE": "N/A",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    },
+    "AE": {
+      "LANDING_PAGE_PPV_DATE": "27 June",
+      "PPV_PRICE": "AED 72.99",
+      "TODAY_YOU_PAY_PRICE": "AED 72.99",
+      "UPSELL_PRICE": "AED 72.99",
+      "UPSELL_CROSSED_PRICE": "N/A",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

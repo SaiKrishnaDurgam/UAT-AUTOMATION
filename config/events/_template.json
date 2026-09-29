@@ -1,0 +1,131 @@
+{
+  "_comment": "TEMPLATE — Copy this file, rename to your_event.json, and fill in values. Remove this _comment field.",
+
+  "eventKey": "CHANGE_ME",
+  "PPV_NAME": "Fighter A vs. Fighter B",
+  "PPV_DISPLAY_NAME": "Fighter A vs. Fighter B",
+  "SPORT": "Boxing",
+  "PPV_TYPE": "normal",
+  "HAS_BUNDLE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": false,
+
+  "_PPV_TYPE_options": "normal = standard PPV | standalone = non-boxing standalone | upsell = cross-PPV purchase flow",
+  "_note_plan_prices": "Do NOT add plan prices here (MONTHLY_PRICE, ANNUAL_PRICE, OFFER_TYPE, etc.) — they come from DaznPlan.json",
+  "_note_offers": "Promotional offers (standard_flex_offer, ultimate_offer) live in DaznPlan.json unless this event has a unique promotion",
+
+  "global": {
+    "_comment": "Shared across all regions — event-specific info only",
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "Matchroom Boxing",
+    "PPV_ENTITLEMENT_ID": "",
+    "PPV_DESCRIPTION": "Catch the biggest moment of the year. Select a DAZN plan to pair with your pay-per-view.",
+    "PPV_UTC_DATE": "2025-12-31T19:00:00Z",
+    "PPV_LOCATION": "City, Country",
+    "PPV_DATE": "Sat 1st Jan at 00:30",
+    "PPV_TIME": "00:30",
+    "PPV_CARD_TITLE": "Fighter A vs. Fighter B",
+    "PPV_CARD_DESCRIPTION": "Just the fight - plus {{FREE_TRIAL_DAYS}} days of DAZN Standard, free.",
+    "BOXING_BANNER_SUBTITLE": "Main Event • 1 Jan • 00:30",
+
+    "_optional_bundle_comment": "Only fill these if the event has a fight bundle. Delete this section otherwise.",
+    "BUNDLE_NAME": "",
+    "BUNDLE_DESCRIPTION": "",
+    "BUNDLE_SAVE_BADGE": "",
+    "BUNDLE_DISCOUNT": "",
+    "BUNDLE_FIGHT_COUNT": "",
+    "BUNDLE_SECTION_TITLE": "",
+    "BUNDLE_SECTION_SUBTITLE": "",
+    "BUNDLE_PPV_CARD_DESCRIPTION": "",
+    "BUNDLE_PPV1_NAME": "",
+    "BUNDLE_PPV1_FULL_NAME": "",
+    "BUNDLE_PPV1_DATE": "",
+    "BUNDLE_PPV1_LANDING_DATE": "",
+    "BUNDLE_PPV2_NAME": "",
+    "BUNDLE_PPV2_FULL_NAME": "",
+    "BUNDLE_PPV2_LANDING_DATE": ""
+  },
+
+  "regions": {
+    "_comment": "Add only regions where this PPV is available. Each region only needs EVENT-SPECIFIC data.",
+
+    "GB": {
+      "LANDING_PAGE_PPV_DATE": "1 January",
+      "PPV_PRICE": "£24.99",
+      "TODAY_YOU_PAY_PRICE": "£24.99",
+      "UPSELL_PRICE_LENGTH": "month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "BUNDLE_ORIGINAL_PRICE": "",
+      "BUNDLE_PRICE": "",
+      "BUNDLE_TODAY_YOU_PAY_STANDARD": "",
+      "BUNDLE_PPV2_DATE": "",
+      "offers": []
+    },
+
+    "US": {
+      "LANDING_PAGE_PPV_DATE": "31 December",
+      "PPV_PRICE": "$59.99",
+      "TODAY_YOU_PAY_PRICE": "$59.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "BUNDLE_ORIGINAL_PRICE": "",
+      "BUNDLE_PRICE": "",
+      "BUNDLE_TODAY_YOU_PAY_STANDARD": "",
+      "BUNDLE_PPV2_DATE": "",
+      "offers": []
+    },
+
+    "AU": {
+      "LANDING_PAGE_PPV_DATE": "1 January",
+      "PPV_PRICE": "$49.99",
+      "TODAY_YOU_PAY_PRICE": "$49.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "BUNDLE_ORIGINAL_PRICE": "",
+      "BUNDLE_PRICE": "",
+      "BUNDLE_TODAY_YOU_PAY_STANDARD": "",
+      "BUNDLE_PPV2_DATE": "",
+      "offers": []
+    },
+
+    "AE": {
+      "LANDING_PAGE_PPV_DATE": "31 December",
+      "PPV_PRICE": "AED 72.99",
+      "TODAY_YOU_PAY_PRICE": "AED 72.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "BUNDLE_ORIGINAL_PRICE": "",
+      "BUNDLE_PRICE": "",
+      "BUNDLE_TODAY_YOU_PAY_STANDARD": "",
+      "BUNDLE_PPV2_DATE": "",
+      "offers": []
+    }
+  },
+
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

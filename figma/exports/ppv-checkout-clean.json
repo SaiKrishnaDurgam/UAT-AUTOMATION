@@ -1,0 +1,50 @@
+{
+  "Page Header": [
+    {
+      "component": "Slot/Header",
+      "role": "FRAME",
+      "width": 375,
+      "height": 54
+    },
+    {
+      "component": ".header-component-mobile",
+      "role": "INSTANCE",
+      "background": "#080e12",
+      "width": 375,
+      "height": 54,
+      "padding": "0px 16px 0px 16px"
+    },
+    {
+      "component": "DAZN Logo",
+      "role": "IMAGE",
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "Page Title": [
+    {
+      "component": "Page Title",
+      "role": "TEXT",
+      "text": "Choose how to pay",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "color": "#f9fafa",
+      "background": "#f9fafa",
+      "width": 255,
+      "height": 54
+    }
+  ],
+  "Body Text": [
+    {
+      "component": "Body copy",
+      "role": "TEXT",
+      "text": "Choose how you'll pay for DAZN Standard after your 7-day free trial.",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "color": "#ffffff",
+      "background": "#ffffff",
+      "width": 343,
+      "height": 42
+    }
+  ]
+}

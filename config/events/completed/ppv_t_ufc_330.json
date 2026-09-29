@@ -1,0 +1,69 @@
+{
+  "eventKey": "ufc_330",
+  "PPV_NAME": "UFC 330: Makhachev vs Machado Garry",
+  "PPV_DISPLAY_NAME": "UFC 330: Makhachev vs Machado Garry",
+  "SPORT": "MMA",
+  "PPV_TYPE": "normal",
+  "HAS_BUNDLE": false,
+  "PPV_DEV_MODE": false,
+  "DEFAULT_SIGNUP_DEVMODE": false,
+  "HAS_DEFAULT_SIGNUP_PPV": false,
+  "global": {
+    "FREE_TRIAL_DAYS": 8,
+    "PPV_PROMOTER": "UFC",
+    "PPV_ENTITLEMENT_ID": "ppv_t_ufc_330",
+    "PPV_DESCRIPTION": "Makhachev defends vs Garry and Dern faces Robertson in a pair of title fights.",
+    "PPV_UTC_DATE": "2026-08-16T01:00:00Z",
+    "PPV_LOCATION": "Canada",
+    "BOXING_BANNER_DATE": "SUN 16TH AUG",
+    "BOXING_BANNER_SUBTITLE": "Makhachev defends vs Garry and Dern faces Robertson in a pair of title fights.",
+    "BOXING_UPCOMING_DATE": "AUG 16",
+    "LANDING_DONT_MISS_DATE": "AUG 16",
+    "PPV_CARD_TITLE": "UFC 330: Makhachev vs Machado Garry",
+    "PPV_CARD_DESCRIPTION": "Makhachev defends vs Garry and Dern faces Robertson in a pair of title fights.",
+    "BANNER_DESCRIPTION": "Makhachev defends vs Garry and Dern faces Robertson in a pair of title fights.",
+    "HOME_POPUP_DESCRIPTION": "Makhachev defends vs Garry and Dern faces Robertson in a pair of title fights."
+  },
+  "regions": {
+    "CA": {
+      "LANDING_PAGE_PPV_DATE": "15 August|16 August|15 Aug|16 Aug",
+      "PPV_DATE": "Sat 15th Aug at 21:00|Sat 15th Aug at 9:00 p.m.|Sat 15th Aug at 9:00PM|Sun 16th Aug at 01:00|Sat 15th Aug|Sun 16th Aug",
+      "PPV_PAGE_DATE": "Sat 15th Aug at 21:00|Sat 15th Aug at 9:00 p.m.|Sun 16th Aug at 01:00",
+      "PPV_TIME": "21:00",
+      "BOXING_BANNER_DATE": "SAT 15TH AUG|SUN 16TH AUG",
+      "LANDING_BANNER_DATE": "SAT 15TH AUG AT 21:00|SAT 15TH AUG AT 9:00 P.M.|SAT 15TH AUG|SUN 16TH AUG AT 01:00",
+      "HOME_POPUP_DATE": "SAT 15TH AUG AT 21:00|SUN 16TH AUG AT 01:00",
+      "PPV_POPUP_DATE": "15 AUG 9:00PM|16 AUG 1:00AM",
+      "SEARCH_PPV_DATE_TIME": "15 AUG 9:00PM|16 AUG 1:00AM",
+      "SCHEDULE_PPV_TIME": "9:00PM",
+      "HOME_BOXING_UPCOMING_TIME": "9:00PM",
+      "PPV_PRICE": "$69.99",
+      "TODAY_YOU_PAY_PRICE": "$69.99",
+      "UPSELL_PRICE": "",
+      "UPSELL_CROSSED_PRICE": "",
+      "UPSELL_PRICE_LENGTH": "/month for 12 months",
+      "PPV1_UPSELL_TILE_DATE": "",
+      "offers": []
+    }
+  },
+  "variants": {
+    "variant1": {
+      "detection": "to watch your pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue with pay-per-view"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    }
+  },
+  "pages": {
+    "ppv": {
+      "detection": "to watch your pay-per-view"
+    },
+    "plan": {
+      "detection": "choose a plan that's right for you"
+    }
+  }
+}

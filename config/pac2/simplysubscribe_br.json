@@ -1,0 +1,33 @@
+{
+  "partnerName": "SimplySubscribe",
+  "brandName": "Chippu",
+  "region": "BR",
+  "locale": "pt-BR",
+  "geolocation": {
+    "latitude": -23.5505,
+    "longitude": -46.6333
+  },
+  "expectedLandingCopy": [
+    "Chippu",
+    "oferta"
+  ],
+  "myAccountPartnerText": "Chippu",
+  "users": {
+    "freemium": {
+      "email": "br_freemium_simplysubscribe@yopmail.com",
+      "password": "Dazn@123"
+    },
+    "frozen": {
+      "email": "br_frozen_simplysubscribe@yopmail.com",
+      "password": "Dazn@123"
+    },
+    "activePaid": {
+      "email": "br_pac1_simplysubscribe@yopmail.com",
+      "password": "Test1!"
+    },
+    "otherPartnerPac": {
+      "email": "br_otherpartner_simplysubscribe@yopmail.com",
+      "password": "Dazn@123"
+    }
+  }
+}

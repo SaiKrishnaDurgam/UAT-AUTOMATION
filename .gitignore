@@ -1,0 +1,67 @@
+node_modules/
+
+# Local Playwright agent experimentation
+.github/agents/
+.github/workflows/copilot-setup-steps.yml
+specs/
+tests/seed.spec.ts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+reports/
+.DS_Store
+*.webm
+*.log
+*.png
+videos/
+auth/dazn-storage-state.json
+.env
+
+# IDE & Local Settings
+.claude/
+.cursor/
+.vscode/
+
+# Scratch & Temporary files
+scratch/
+~$*.xlsx
+
+# TV/Web handoff runtime artifacts
+mobile_entry_url.txt
+tv_handoff_storage_state.json
+tv_ppv_report_metadata.json
+
+# Cline AI tool files (local only)
+.clinerules
+.clinerules.md
+
+# Backup files
+*.bak
+*.bak.*
+
+# Bare git clone directories
+*.git/
+!.git/
+
+# Local-only scripts
+scripts/run_existing_already_signed_in_parallel_local.sh
+
+# GitHub Actions runners
+actions-runner/
+actions-runner-2/
+actions-runner-3/
+actions-runner-4/
+actions-runner-5/
+*.tar.gz
+
+# Runner runtime files
+.runner
+.credentials
+.credentials_rsaparams
+_work/
+_diag/
+
+playwright-report/
+.DS_Store
+node_modules/

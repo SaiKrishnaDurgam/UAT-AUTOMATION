@@ -1,0 +1,7 @@
+dazn-manifest: 4.0.0
+owner: qa-automation@dazn.com
+services:
+  - name: uat-ppv-end-to-end-automation
+    description: End-to-end Playwright automation suite for PPV purchase and validation flows across all DAZN regions and platforms (web and Android).
+    annotations:
+      jira/project-key: UAT

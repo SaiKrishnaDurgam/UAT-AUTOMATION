@@ -1,0 +1,169 @@
+{
+  "_comment": "TEMPLATE — Use this as a reference when adding a new plan/region to DaznPlan.json. Do NOT rename this file.",
+  "_note_structure": "DaznPlan.json has 4 top-level plan keys. Each contains a TIER, RATE_PLAN, and per-region config.",
+  "_note_offers": "N-day trials and 1-month-free offers are controlled by OFFER_TYPE (not in the offers[] array). The offers[] array is ONLY for promotional/discount offers.",
+  "_note_defaults": "Fields not set per-region fall back to GLOBAL_DEFAULTS in buildEventData.ts.",
+
+  "standard_monthly": {
+    "_comment": "Standard tier, Flex – Pay Monthly plan",
+    "TIER": "standard",
+    "RATE_PLAN": "monthly",
+    "regions": {
+      "REGION_CODE": {
+        "_comment_required": "These fields are REQUIRED for every region",
+        "BASE_URL": "https://www.dazn.com/en-XX",
+        "CURRENCY": "£|$|€|AED",
+        "DAZN_TIER": "DAZN Standard",
+        "OFFER_TYPE": "7_day_trial|1_month_free|none",
+
+        "_comment_prices": "All prices WITHOUT currency symbol (it's prepended dynamically)",
+        "MONTHLY_PRICE": "25.99",
+        "ANNUAL_PRICE": "15.99",
+        "ANNUAL_PAY_MONTHLY_PRICE": "24.99",
+        "ANNUAL_UPFRONT_PRICE": "249.99",
+        "ANNUAL_MONTHS": "11",
+
+        "_comment_display_prices": "Pre-formatted with currency (used in cancellation text, etc.)",
+        "NEXT_PAYMENT_PRICE": "£25.99",
+        "TRIAL_MONTHLY_PRICE": "£25.99",
+
+        "_comment_computed": "These can be auto-computed by buildEventData if left empty",
+        "UPFRONT_SAVE_AMOUNT": "49.89",
+        "ANNUAL_SAVINGS_BADGE": "SAVE £135.99 A YEAR",
+
+        "_comment_descriptions": "Plan page and payment page text",
+        "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "Annual contract. Auto renews.",
+        "CANCELLATION_TEXT_TRIAL": "In {{FREE_TRIAL_DAYS}} days, you'll be charged £25.99/month. Cancel anytime before the end of the trial.",
+        "CANCELLATION_TEXT_ANNUAL": "First month free, then £15.99/month for 11 months (£175.89 total over 12 months). 12-month minimum term. On {{RENEWAL_DATE}} your plan renews automatically",
+        "CANCELLATION_TEXT_ULTIMATE_APM": "Your Annual (pay over time) plan will renew automatically on {{RENEWAL_DATE}}. Manage or cancel your annual renewal anytime in My Account. 12-month minimum term",
+        "CANCELLATION_TEXT_ULTIMATE_APU": "You can cancel the renewal to this subscription in My Account. You will still have full access to DAZN until the end of your annual cycle.",
+
+        "_comment_ultimate_features": "These are for the Ultimate tier plan page. Override per-region if needed.",
+        "ULTIMATE_FEATURE_1": "Minimum 12 pay-per-views a year included at no extra cost.",
+        "ULTIMATE_FEATURE_2": "185+ fights a year from the world's best promoters.",
+        "ULTIMATE_FEATURE_3": "HDR and Dolby 5.1 surround sound on select events.",
+
+        "_comment_ultimate_pricing": "Ultimate tier pricing (used for upsell calculations)",
+        "ULTIMATE_ANNUAL_PAY_MONTHLY_PRICE": "£24.99",
+        "TODAY_YOU_PAY_ULTIMATE_APM": "£24.99",
+
+        "_comment_offers": "Promotional offers ONLY — NOT for N-day trials / 1-month free (those are controlled by OFFER_TYPE above)",
+        "offers": [
+          {
+            "_comment": "Example: standard flex promotional discount. Set enabled=true to activate.",
+            "name": "standard_flex_offer",
+            "enabled": false,
+            "environments": ["stag", "beta", "prod"],
+            "target_region": ["GB"],
+            "OFFER_PRICE": "4.99",
+            "ORIGINAL_PRICE": "25.99",
+            "DISCOUNT_BADGE": "81% OFF for your first month",
+            "PLAN_LABEL": "Flex – Pay Monthly - First Month Only",
+            "OFFER_DESCRIPTION": "Pay for the fight and get your first month of DAZN Standard for only £4.99.",
+            "CANCELLATION_TEXT": "£4.99 for your first month, then £25.99/month.",
+            "TODAY_YOU_PAY": "19.98",
+            "TODAY_YOU_PAY_ORIGINAL": "40.98"
+          }
+        ]
+      }
+    }
+  },
+
+  "standard_apm": {
+    "_comment": "Standard tier, Annual – Pay Monthly plan",
+    "TIER": "standard",
+    "RATE_PLAN": "annual pay monthly",
+    "regions": {
+      "REGION_CODE": {
+        "BASE_URL": "https://www.dazn.com/en-XX",
+        "CURRENCY": "£|$|€|AED",
+        "DAZN_TIER": "DAZN Standard",
+        "OFFER_TYPE": "1_month_free|7_day_trial|none",
+        "MONTHLY_PRICE": "25.99",
+        "ANNUAL_PRICE": "15.99",
+        "ANNUAL_PAY_MONTHLY_PRICE": "24.99",
+        "ANNUAL_UPFRONT_PRICE": "249.99",
+        "ANNUAL_MONTHS": "11",
+        "NEXT_PAYMENT_PRICE": "£25.99",
+        "TRIAL_MONTHLY_PRICE": "£25.99",
+        "CANCELLATION_TEXT_ANNUAL": "First month free, then £15.99/month for 11 months...",
+        "CANCELLATION_TEXT_TRIAL": "In {{FREE_TRIAL_DAYS}} days, you'll be charged £25.99/month...",
+        "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "Annual contract. Auto renews.",
+        "ANNUAL_SAVINGS_BADGE": "SAVE £135.99 A YEAR",
+        "CANCELLATION_TEXT_ULTIMATE_APM": "Your Annual (pay over time) plan will renew automatically...",
+        "ULTIMATE_ANNUAL_PAY_MONTHLY_PRICE": "£24.99",
+        "TODAY_YOU_PAY_ULTIMATE_APM": "£24.99",
+        "offers": []
+      }
+    }
+  },
+
+  "ultimate_apm": {
+    "_comment": "Ultimate tier, Annual – Pay Monthly plan",
+    "TIER": "ultimate",
+    "RATE_PLAN": "annual pay monthly",
+    "regions": {
+      "REGION_CODE": {
+        "BASE_URL": "https://www.dazn.com/en-XX",
+        "CURRENCY": "£|$|€|AED",
+        "DAZN_TIER": "DAZN Ultimate",
+        "OFFER_TYPE": "1_month_free|none",
+        "MONTHLY_PRICE": "25.99",
+        "ANNUAL_PRICE": "15.99",
+        "ANNUAL_PAY_MONTHLY_PRICE": "24.99",
+        "ANNUAL_UPFRONT_PRICE": "249.99",
+        "ANNUAL_MONTHS": "11",
+        "NEXT_PAYMENT_PRICE": "£25.99",
+        "TRIAL_MONTHLY_PRICE": "£25.99",
+        "CANCELLATION_TEXT_ULTIMATE_APM": "Your Annual (pay over time) plan will renew automatically...",
+        "CANCELLATION_TEXT_ULTIMATE_APU": "You can cancel the renewal...",
+        "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "Annual contract. Auto renews.",
+        "ANNUAL_SAVINGS_BADGE": "SAVE £135.99 A YEAR",
+        "CANCELLATION_TEXT_ANNUAL": "First month free, then...",
+        "offers": [
+          {
+            "_comment": "Example: ultimate tier promotional discount. Set enabled=true to activate.",
+            "name": "ultimate_offer",
+            "enabled": false,
+            "environments": ["stag", "beta", "prod"],
+            "target_region": ["GB"],
+            "OFFER_PRICE": "19.99",
+            "ORIGINAL_PRICE": "24.99",
+            "DISCOUNT_BADGE": "20% OFF for 12 months",
+            "PLAN_LABEL": "Pay Monthly (First 12 months)",
+            "OFFER_DESCRIPTION": "Offer for your first 12 months...",
+            "CANCELLATION_TEXT": "Promotional price of £19.99/month for 12 months..."
+          }
+        ]
+      }
+    }
+  },
+
+  "ultimate_upfront": {
+    "_comment": "Ultimate tier, Annual – Pay Upfront plan",
+    "TIER": "ultimate",
+    "RATE_PLAN": "annual pay upfront",
+    "regions": {
+      "REGION_CODE": {
+        "BASE_URL": "https://www.dazn.com/en-XX",
+        "CURRENCY": "£|$|€|AED",
+        "DAZN_TIER": "DAZN Ultimate",
+        "OFFER_TYPE": "1_month_free|none",
+        "MONTHLY_PRICE": "25.99",
+        "ANNUAL_PRICE": "15.99",
+        "ANNUAL_PAY_MONTHLY_PRICE": "24.99",
+        "ANNUAL_UPFRONT_PRICE": "249.99",
+        "ANNUAL_MONTHS": "11",
+        "NEXT_PAYMENT_PRICE": "£25.99",
+        "TRIAL_MONTHLY_PRICE": "£25.99",
+        "CANCELLATION_TEXT_ULTIMATE_APU": "You can cancel the renewal...",
+        "CANCELLATION_TEXT_ANNUAL": "First month free, then...",
+        "CANCELLATION_TEXT_TRIAL": "In {{FREE_TRIAL_DAYS}} days, you'll be charged...",
+        "ANNUAL_SAVINGS_BADGE": "SAVE £135.99 A YEAR",
+        "UPFRONT_SAVE_AMOUNT": "49.89",
+        "ANNUAL_PAY_MONTHLY_CONTRACT_TEXT": "Annual contract. Auto renews.",
+        "offers": []
+      }
+    }
+  }
+}

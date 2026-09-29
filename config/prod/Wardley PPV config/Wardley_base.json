@@ -1,0 +1,84 @@
+{
+  "PPV_NAME": "Wardley vs. Dubois",
+  "SECONDARY_PPV": "Chisora vs. Wilder",
+  "SPORT": "Boxing",
+
+  "global": {
+    "PPV_DATE": "Sat 9th May at 23:30",
+    "SECONDARY_PPV_DATE": "Sat 9th May at 23:30",
+    "PPV_TIME": "20:30",
+    "PPV_PROMOTER": "Queensberry Promotions",
+    "PPV_DESCRIPTION": "Catch the biggest moment of the year. Select a DAZN plan to pair with your pay-per-view.",
+    "ANNUAL_MONTHS": "11"
+  },
+
+  "regions": {
+    "UK": {
+      "BASE_URL": "https://www.dazn.com/en-GB",
+      "CURRENCY": "£",
+      "MONTHLY_PRICE": "24.99",
+      "ANNUAL_PRICE": "14.99",
+      "ANNUAL_TOTAL": "",
+      "BUNDLE_PRICE": "£49.99",
+      "BUNDLE_ORIGINAL_PRICE": "£59.98",
+      "UPSELL_PLAN_NAME": "Annual - Pay Monthly",
+      "FIRST_MONTH_FREE_TEXT": "+ one month free"
+    },
+    "US": {
+      "BASE_URL": "https://www.dazn.com/en-US",
+      "CURRENCY": "$",
+      "MONTHLY_PRICE": "31.99",
+      "ANNUAL_PRICE": "16.99",
+      "ANNUAL_TOTAL": "",
+      "BUNDLE_PRICE": "$79.99",
+      "BUNDLE_ORIGINAL_PRICE": "$99.98",
+      "UPSELL_PLAN_NAME": "Annual - Pay Monthly",
+      "FIRST_MONTH_FREE_TEXT": "+ First month free"
+    },
+    "AU": {
+      "BASE_URL": "https://www.dazn.com/en-AU",
+      "CURRENCY": "$",
+      "MONTHLY_PRICE": "31.99",
+      "ANNUAL_PRICE": "16.99",
+      "ANNUAL_TOTAL": "",
+      "BUNDLE_PRICE": "$79.99",
+      "BUNDLE_ORIGINAL_PRICE": "$99.98",
+      "UPSELL_PLAN_NAME": "Annual - pay over time",
+      "FIRST_MONTH_FREE_TEXT": "+ First month free"
+    },
+    "IN": {
+      "BASE_URL": "https://www.dazn.com/en-IN",
+      "CURRENCY": "₹",
+      "MONTHLY_PRICE": "799",
+      "ANNUAL_PRICE": "409",
+      "ANNUAL_TOTAL": "4,499",
+      "BUNDLE_PRICE": "₹2,999",
+      "BUNDLE_ORIGINAL_PRICE": "₹3,906",
+      "UPSELL_PLAN_NAME": "Annual - pay over time",
+      "FIRST_MONTH_FREE_TEXT": "+ First month free"
+    }
+  },
+
+  "variants": {
+    "variant1": {
+      "detection": "subscribe without a pay-per-view",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    },
+    "variant2": {
+      "detection": "choose your subscription",
+      "ppvSelector": "input[type='checkbox']",
+      "ctaText": "Continue with PPV"
+    },
+    "variant3": {
+      "detection": "2 fight",
+      "ppvSelector": "input[type='radio']",
+      "ctaText": "Continue"
+    }
+  },
+
+  "pages": {
+    "ppv": { "detection": "subscribe without a pay-per-view" },
+    "plan": { "detection": "choose a plan that's right for you" }
+  }
+}
