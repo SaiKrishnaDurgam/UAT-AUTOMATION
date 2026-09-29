@@ -1,0 +1,28 @@
+        if (pageType === 'email') {
+          emailProcessedCount++;
+
+          const user = createTestUser();
+
+          if (emailProcessedCount > 1) {
+            console.log("⚠️ Email already processed — skipping repeated step");
+            continue;
+          }
+
+          const emailInput = page.locator('input[type="email"]').first();
+          const isEmailVisible = await emailInput.isVisible().catch(() => false);
+
+          if (isEmailVisible) {
+            console.log("📧 Email input visible → entering email");
+
+            const signup = new SignupPage(page);
+            await signup.enterEmail(user.email);
+            await signup.clickContinue();
+
+            await page.waitForLoadState("domcontentloaded").catch(() => {});
+            await sleep(500);
+          } else {
+            console.log("⏭️ Email input NOT visible → skipping email step");
+          }
+
+          continue;
+        }
